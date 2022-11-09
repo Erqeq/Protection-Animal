@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.3.32929.385
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Animal-Protection", "Animal-Protection\Animal-Protection.csproj", "{3C8F0E38-58CE-418B-B628-51F8ED6DEC93}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection-Animal.WebApp", "Animal-Protection\Protection-Animal.WebApp.csproj", "{3C8F0E38-58CE-418B-B628-51F8ED6DEC93}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Animal-Protection.Data", "Animal-Protection.Data\Animal-Protection.Data.csproj", "{4B6CD951-19EA-41BC-9E1C-9597DB5FC8B5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection-Animal.Data", "Animal-Protection.Data\Protection-Animal.Data.csproj", "{4B6CD951-19EA-41BC-9E1C-9597DB5FC8B5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protection-Animal.Model", "Protection-Animal.Model\Protection-Animal.Model.csproj", "{0925452D-D0ED-4013-A717-69D98A5765E3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection-Animal.Model", "Protection-Animal.Model\Protection-Animal.Model.csproj", "{0925452D-D0ED-4013-A717-69D98A5765E3}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

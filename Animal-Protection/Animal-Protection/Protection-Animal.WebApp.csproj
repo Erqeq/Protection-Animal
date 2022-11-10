@@ -20,6 +20,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Animal-Protection.Data\Protection-Animal.Data.csproj" />
+    <ProjectReference Include="..\Protection-Animal.Controller\Protection-Animal.Controller.csproj" />
+    <ProjectReference Include="..\Protection-Animal.Model\Protection-Animal.Model.csproj" />
   </ItemGroup>
 
 </Project>

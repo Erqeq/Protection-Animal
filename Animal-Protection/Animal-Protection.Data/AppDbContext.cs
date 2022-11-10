@@ -13,8 +13,8 @@ namespace Animal_Protection.Data
     public class AppDbContext : DbContext
     {
         public DbSet<Animal> Animals { get; set; }
-        public DbSet<BaseEntity> BaseEntities { get; set; }
-        public DbSet<Category> Categories { get; set; }
+        public DbSet<Application> Applications { get; set; }
+        public DbSet<ApplicationCategory> Categories { get; set; }
         public DbSet<Client> Clients { get;set; }
         public AppDbContext(DbContextOptions<AppDbContext> ctx) : base(ctx)
         {

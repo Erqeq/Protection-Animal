@@ -9,6 +9,11 @@ var connectionString = builder.Configuration.GetConnectionString("IdentityContex
 
 builder.Services.AddDbContext<IdentityContext>(options =>
     options.UseSqlServer(connectionString));
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultTokenProviders();
+
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
 builder.Services.AddDefaultIdentity<AnimalProtectionUser>(options => options.SignIn.RequireConfirmedAccount = true)
     .AddEntityFrameworkStores<IdentityContext>();

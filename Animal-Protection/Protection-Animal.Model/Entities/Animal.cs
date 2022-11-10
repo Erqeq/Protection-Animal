@@ -1,13 +1,13 @@
-﻿namespace Protection_Animal.Model.Entities
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Protection_Animal.Model.Entities
 {
     public class Animal : BaseEntity
     {
-        public int Id { get; set; }
-        public string Name { get; set; }
         public DateTime DateOfBirth { get; set; }
-
+        [MaxLength(500)]
         public string Description { get; set; }
-        public string ShortDesc { get; set; }
+        [MaxLength(1000)]
         public string Image { get; set; }
     }
 }

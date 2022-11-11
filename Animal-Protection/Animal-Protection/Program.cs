@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Areas.Identity.Data;
 using Animal_Protection.Data;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Protection_Animal.Utility;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,8 +18,10 @@ builder.Services.AddDbContext<IdentityContext>(options =>
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
-builder.Services.AddDefaultIdentity<AnimalProtectionUser>(options => options.SignIn.RequireConfirmedAccount = true)
+builder.Services.AddDefaultIdentity<AnimalProtectionUser>()
     .AddEntityFrameworkStores<IdentityContext>();
+
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();

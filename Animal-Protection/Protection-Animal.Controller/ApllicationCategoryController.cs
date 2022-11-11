@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
-using ProjectAnimal.Model.Repository;
-using Protection_Animal;
+﻿using ProjectAnimal.Model.Repository;
 using Protection_Animal.Model.Entities;
 
 namespace Protection_Animal.Controller

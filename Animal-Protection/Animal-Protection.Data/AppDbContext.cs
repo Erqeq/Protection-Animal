@@ -20,6 +20,7 @@ namespace Animal_Protection.Data
         {
 
         }
+        public AppDbContext() { }   
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             IConfiguration config = new ConfigurationBuilder()

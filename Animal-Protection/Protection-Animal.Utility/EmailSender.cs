@@ -38,39 +38,39 @@ namespace Protection_Animal.Utility
             {
                 Resource = Send.Resource,
             }
-            .Property(Send.Messages, new JArray 
+            .Property(Send.Messages, new JArray
             {
-                new JObject 
+                new JObject
                 {
                     {
                         "From",
-                         new JObject 
+                         new JObject
                          {
                             {"Email", "protection-animal@proton.me"},
                             {"Name", "Protection-Animal"}
                          }
-                    }, 
+                    },
                     {
                         "To",
-                         new JArray 
+                         new JArray
                          {
-                            new JObject 
+                            new JObject
                             {
                                 {
                                     "Email",
                                      email
-                                }, 
+                                },
                                 {
                                      "Name",
                                      "User"
                                 }
                              }
                           }
-                    }, 
+                    },
                     {
                         "Subject",
                          subject
-                    }, 
+                    },
                     {
                         "HTMLPart",
                          body

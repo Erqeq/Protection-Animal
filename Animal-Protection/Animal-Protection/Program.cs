@@ -12,14 +12,13 @@ var connectionString = builder.Configuration.GetConnectionString("IdentityContex
 builder.Services.AddDbContext<IdentityContext>(options =>
     options.UseSqlServer(connectionString));
 
-//builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-//            .AddEntityFrameworkStores<IdentityContext>()
-//            .AddDefaultTokenProviders();
+builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
+            .AddEntityFrameworkStores<IdentityContext>()
+            .AddDefaultTokenProviders()
+            .AddDefaultUI();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
-builder.Services.AddDefaultIdentity<AnimalProtectionUser>()
-    .AddEntityFrameworkStores<IdentityContext>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

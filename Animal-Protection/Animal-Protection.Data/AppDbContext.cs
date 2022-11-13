@@ -16,10 +16,10 @@ namespace Animal_Protection.Data
         public DbSet<Application> Applications { get; set; }
         public DbSet<ApplicationCategory> Categories { get; set; }
         public DbSet<Client> Clients { get;set; }
-        //public AppDbContext(DbContextOptions<AppDbContext> ctx) : base(ctx)
-        //{
+        public AppDbContext(DbContextOptions<AppDbContext> ctx) : base(ctx)
+        {
 
-        //}
+        }
         public AppDbContext() { }   
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {

@@ -30,13 +30,15 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AnimalProtectionUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
         public RegisterModel(
             UserManager<AnimalProtectionUser> userManager,
             IUserStore<AnimalProtectionUser> userStore,
             SignInManager<AnimalProtectionUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -44,6 +46,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
+            _roleManager = roleManager;
         }
 
         /// <summary>
@@ -103,6 +106,12 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
+            if(!await _roleManager.RoleExistsAsync(WebConstants.Admin))
+            {
+                await _roleManager.CreateAsync(new IdentityRole(WebConstants.Admin));
+                await _roleManager.CreateAsync(new IdentityRole(WebConstants.User));
+            }
+            
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -121,6 +130,14 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    if (User.IsInRole(WebConstants.Admin))
+                    {
+                        await _userManager.AddToRoleAsync(user, WebConstants.Admin);
+                    }
+                    else
+                    {
+                        await _userManager.AddToRoleAsync(user, WebConstants.User);
+                    }
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);

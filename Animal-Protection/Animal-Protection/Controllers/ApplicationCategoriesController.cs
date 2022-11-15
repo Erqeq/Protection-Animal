@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
@@ -23,24 +19,6 @@ namespace Animal_Protection.Controllers
         public async Task<IActionResult> Index()
         {
               return View(await _context.Categories.ToListAsync());
-        }
-
-        // GET: ApplicationCategories/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var applicationCategory = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicationCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationCategory);
         }
 
         // GET: ApplicationCategories/Create

@@ -94,42 +94,7 @@ namespace Animal_Protection.Controllers
             return View(applicationCategory);
         }
 
-        // GET: ApplicationCategories/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
-
-            var applicationCategory = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (applicationCategory == null)
-            {
-                return NotFound();
-            }
-
-            return View(applicationCategory);
-        }
-
-        // POST: ApplicationCategories/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'AppDbContext.Categories'  is null.");
-            }
-            var applicationCategory = await _context.Categories.FindAsync(id);
-            if (applicationCategory != null)
-            {
-                _context.Categories.Remove(applicationCategory);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
+        
 
         private bool ApplicationCategoryExists(int id)
         {

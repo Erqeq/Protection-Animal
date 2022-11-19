@@ -94,8 +94,6 @@ namespace Animal_Protection.Controllers
             return View(applicationCategory);
         }
 
-        
-
         private bool ApplicationCategoryExists(int id)
         {
           return _context.Categories.Any(e => e.Id == id);

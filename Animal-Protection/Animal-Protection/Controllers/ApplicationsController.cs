@@ -22,7 +22,7 @@ namespace Animal_Protection.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Receiver).Include(a => a.Sender);
+            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender);
             return View(await appDbContext.ToListAsync());
         }
 
@@ -37,7 +37,6 @@ namespace Animal_Protection.Controllers
             var application = await _context.Applications
                 .Include(a => a.Animal)
                 .Include(a => a.Category)
-                .Include(a => a.Receiver)
                 .Include(a => a.Sender)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (application == null)
@@ -73,7 +72,6 @@ namespace Animal_Protection.Controllers
             }
             ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
-            ViewData["ReceiverId"] = new SelectList(_context.Clients, "Id", "Address", application.ReceiverId);
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);
         }
@@ -93,7 +91,6 @@ namespace Animal_Protection.Controllers
             }
             ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
-            ViewData["ReceiverId"] = new SelectList(_context.Clients, "Id", "Address", application.ReceiverId);
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);
         }
@@ -103,7 +100,7 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,DateCreate,IsActive,CategoryId,SenderId,ReceiverId,AnimalId,Id,Name")] Application application)
+        public async Task<IActionResult> Edit(int id, [Bind("Description,DateCreate,IsActive,CategoryId,SenderId,AnimalId,Id,Name")] Application application)
         {
             if (id != application.Id)
             {
@@ -132,7 +129,6 @@ namespace Animal_Protection.Controllers
             }
             ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
-            ViewData["ReceiverId"] = new SelectList(_context.Clients, "Id", "Address", application.ReceiverId);
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);
         }
@@ -148,7 +144,6 @@ namespace Animal_Protection.Controllers
             var application = await _context.Applications
                 .Include(a => a.Animal)
                 .Include(a => a.Category)
-                .Include(a => a.Receiver)
                 .Include(a => a.Sender)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (application == null)

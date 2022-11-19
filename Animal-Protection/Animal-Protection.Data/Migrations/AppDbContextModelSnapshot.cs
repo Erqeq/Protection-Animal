@@ -30,9 +30,6 @@ namespace Animal_Protection.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DateOfBirth")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasMaxLength(500)
@@ -75,6 +72,11 @@ namespace Animal_Protection.Data.Migrations
                         .HasMaxLength(500)
                         .HasColumnType("nvarchar(500)");
 
+                    b.Property<string>("Image")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("bit");
 
@@ -83,19 +85,15 @@ namespace Animal_Protection.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("ReceiverId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SenderId")
-                        .HasColumnType("int");
+                    b.Property<string>("SenderId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("AnimalId");
 
                     b.HasIndex("CategoryId");
-
-                    b.HasIndex("ReceiverId");
 
                     b.HasIndex("SenderId");
 
@@ -122,8 +120,8 @@ namespace Animal_Protection.Data.Migrations
 
             modelBuilder.Entity("Protection_Animal.Model.Entities.Client", b =>
                 {
-                    b.Property<int>("Id")
-                        .HasColumnType("int");
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
                         .IsRequired()
@@ -140,8 +138,10 @@ namespace Animal_Protection.Data.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
-                    b.Property<int>("TelephoneNumber")
-                        .HasColumnType("int");
+                    b.Property<string>("TelephoneNumber")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.HasKey("Id");
 
@@ -162,12 +162,6 @@ namespace Animal_Protection.Data.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Protection_Animal.Model.Entities.Client", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("Protection_Animal.Model.Entities.Client", "Sender")
                         .WithMany()
                         .HasForeignKey("SenderId")
@@ -177,8 +171,6 @@ namespace Animal_Protection.Data.Migrations
                     b.Navigation("Animal");
 
                     b.Navigation("Category");
-
-                    b.Navigation("Receiver");
 
                     b.Navigation("Sender");
                 });

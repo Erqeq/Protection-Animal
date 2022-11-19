@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -9,6 +9,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Animal-Protection.Data\Protection-Animal.Data.csproj" />
+    <ProjectReference Include="..\Animal-Protection\Protection-Animal.WebApp.csproj" />
   </ItemGroup>
 
 </Project>

@@ -20,7 +20,7 @@ namespace Animal_Protection.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Receiver).Include(a => a.Sender).Where(x => x.IsActive == true);
+            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender).Where(x => x.IsActive == true);
             return View(await appDbContext.ToListAsync());
         }
 

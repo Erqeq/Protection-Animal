@@ -26,7 +26,7 @@ namespace Animal_Protection.Controllers
         }
 
         // GET: Clients/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(string? id)
         {
             if (id == null || _context.Clients == null)
             {
@@ -86,7 +86,7 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Email,TelephoneNumber,Address,Name")] Client client)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Email,TelephoneNumber,Address,Name")] Client client)
         {
             if (id != client.Id)
             {
@@ -117,7 +117,7 @@ namespace Animal_Protection.Controllers
         }
 
         // GET: Clients/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(string? id)
         {
             if (id == null || _context.Clients == null)
             {
@@ -153,7 +153,7 @@ namespace Animal_Protection.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClientExists(int id)
+        private bool ClientExists(string id)
         {
           return _context.Clients.Any(e => e.Id == id);
         }

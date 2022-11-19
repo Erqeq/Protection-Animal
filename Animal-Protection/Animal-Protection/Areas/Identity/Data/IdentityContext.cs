@@ -7,6 +7,7 @@ namespace Animal_Protection.Areas.Identity.Data;
 
 public class IdentityContext : IdentityDbContext<AnimalProtectionUser>
 {
+    public DbSet<AnimalProtectionUser> AnimalProtectionUsers { get; set; }
     public IdentityContext(DbContextOptions<IdentityContext> options)
         : base(options)
     {

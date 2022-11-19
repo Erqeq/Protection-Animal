@@ -10,7 +10,7 @@ namespace Protection_Animal.Model.Entities
         public int Id { get; set; }
         [MaxLength(50)]
         public string Email { get; set; }
-        [Range(1, 12,ErrorMessage = "Incorrect number")]
+        [Range(1, 13,ErrorMessage = "Incorrect number")]
         public int TelephoneNumber { get; set; }
         [MaxLength(100)]
         public string Address { get; set; }

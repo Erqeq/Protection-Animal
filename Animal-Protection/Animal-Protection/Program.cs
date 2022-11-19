@@ -19,12 +19,10 @@ builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
-
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
 
 var app = builder.Build();
 

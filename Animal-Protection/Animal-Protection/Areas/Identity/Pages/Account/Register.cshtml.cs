@@ -19,6 +19,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Protection_Animal.Model.Entities;
+using Protection_Animal.Controller;
 
 namespace Animal_Protection.Areas.Identity.Pages.Account
 {
@@ -31,6 +33,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly ClientController _clientController;
 
         public RegisterModel(
             UserManager<AnimalProtectionUser> userManager,
@@ -38,7 +41,8 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
             SignInManager<AnimalProtectionUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<IdentityRole> roleManager,
+            ClientController clientController)
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -47,6 +51,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
             _logger = logger;
             _emailSender = emailSender;
             _roleManager = roleManager;
+            _clientController = clientController;
         }
 
         /// <summary>
@@ -135,6 +140,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
+                    _clientController.AddUser(user);
                     if (User.IsInRole(WebConstants.Admin))
                     {
                         await _userManager.AddToRoleAsync(user, WebConstants.Admin);

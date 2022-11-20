@@ -8,9 +8,12 @@ using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Authorization;
+using System.Data;
 
 namespace Animal_Protection.Controllers
 {
+    [Authorize]
     public class ApplicationsController : Controller
     {
         private readonly AppDbContext _context;

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
+using System.Security.Claims;
 
 namespace Animal_Protection.Controllers
 {
@@ -53,7 +54,7 @@ namespace Animal_Protection.Controllers
             ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             ViewData["ReceiverId"] = new SelectList(_context.Clients, "Id", "Address");
-            ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address");
+            ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Name");
             return View();
         }
 
@@ -62,17 +63,17 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,DateCreate,IsActive,CategoryId,SenderId,ReceiverId,AnimalId,Id,Name")] Application application)
+        public async Task<IActionResult> Create([Bind("Description,CategoryId,AnimalId,Id,Name")] Application application)
         {
             if (!ModelState.IsValid)
             {
+                application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(application);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
             ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
-            ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);
         }
 
@@ -168,14 +169,14 @@ namespace Animal_Protection.Controllers
             {
                 _context.Applications.Remove(application);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ApplicationExists(int id)
         {
-          return _context.Applications.Any(e => e.Id == id);
+            return _context.Applications.Any(e => e.Id == id);
         }
     }
 }

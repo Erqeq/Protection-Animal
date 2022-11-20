@@ -64,7 +64,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Description,DateCreate,IsActive,CategoryId,SenderId,ReceiverId,AnimalId,Id,Name")] Application application)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 _context.Add(application);
                 await _context.SaveChangesAsync();

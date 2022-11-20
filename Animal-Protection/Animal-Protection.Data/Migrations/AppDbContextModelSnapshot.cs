@@ -73,7 +73,6 @@ namespace Animal_Protection.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Image")
-                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 
@@ -124,7 +123,6 @@ namespace Animal_Protection.Data.Migrations
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Address")
-                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 

@@ -17,6 +17,6 @@ namespace Protection_Animal.Model.Entities
         public int AnimalId { get; set; }   
         public Animal Animal { get; set; }
         [MaxLength(1000)]
-        public string Image { get; set; }
+        public string? Image { get; set; }
     }
 }

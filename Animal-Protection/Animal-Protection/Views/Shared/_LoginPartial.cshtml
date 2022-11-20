@@ -1,8 +1,10 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using Animal_Protection.Areas.Identity.Data
+@using Animal_Protection.Models
 
 @inject SignInManager<AnimalProtectionUser> SignInManager
 @inject UserManager<AnimalProtectionUser> UserManager
+
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

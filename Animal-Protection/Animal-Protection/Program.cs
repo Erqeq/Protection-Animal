@@ -24,8 +24,6 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
 
-
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 

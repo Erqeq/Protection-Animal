@@ -1,5 +1,7 @@
-﻿using System.ComponentModel;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Protection_Animal.Model.Entities
 {
@@ -18,5 +20,8 @@ namespace Protection_Animal.Model.Entities
         public Animal Animal { get; set; }
         [MaxLength(1000)]
         public string? Image { get; set; }
+
+        [NotMapped]
+        public IFormFile ImageFile { get; set; }
     }
 }

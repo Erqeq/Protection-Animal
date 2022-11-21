@@ -10,6 +10,8 @@ using Protection_Animal.Model.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using System.Data;
+using Microsoft.AspNetCore.Hosting;
+using Protection_Animal.Utility;
 
 namespace Animal_Protection.Controllers
 {
@@ -17,10 +19,11 @@ namespace Animal_Protection.Controllers
     public class ApplicationsController : Controller
     {
         private readonly AppDbContext _context;
-
-        public ApplicationsController(AppDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+        public ApplicationsController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Applications
@@ -66,10 +69,24 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,CategoryId,AnimalId,Id,Name")] Application application)
+        public async Task<IActionResult> Create([Bind("Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
         {
             if (!ModelState.IsValid)
             {
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+
+                string upload = webRootPath + WebConstants.ImagePath;
+                string fileName = Guid.NewGuid().ToString();
+                string extension = Path.GetExtension(files[0].FileName);
+
+                using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                {
+                    files[0].CopyTo(fileStream);
+                }
+
+                application.Image = fileName + extension;
+
                 application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                 _context.Add(application);
                 await _context.SaveChangesAsync();
@@ -104,17 +121,39 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,DateCreate,IsActive,CategoryId,SenderId,AnimalId,Id,Name")] Application application)
+        public async Task<IActionResult> Edit(int id, Application application)
         {
+            var objectFromDb = _context.Animals.AsNoTracking()
+                .FirstOrDefault(u => u.Id == application.Id);
             if (id != application.Id)
             {
                 return NotFound();
             }
 
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 try
                 {
+                    var files = HttpContext.Request.Form.Files;
+                    string webRootPath = _webHostEnvironment.WebRootPath;
+
+                    string upload = webRootPath + WebConstants.ImagePath;
+                    string fileName = Guid.NewGuid().ToString();
+                    string extension = Path.GetExtension(files[0].FileName);
+
+                    var imagePath = Path.Combine(upload, objectFromDb.Image);
+
+                    if (System.IO.File.Exists(imagePath))
+                    {
+                        System.IO.File.Delete(imagePath);
+                    }
+
+                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                    {
+                        files[0].CopyTo(fileStream);
+                    }
+
+                    application.Image = fileName + extension;
                     _context.Update(application);
                     await _context.SaveChangesAsync();
                 }
@@ -168,6 +207,16 @@ namespace Animal_Protection.Controllers
                 return Problem("Entity set 'AppDbContext.Applications'  is null.");
             }
             var application = await _context.Applications.FindAsync(id);
+
+            string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;
+
+            var imagePath = Path.Combine(upload, application.Image);
+
+            if (System.IO.File.Exists(imagePath))
+            {
+                System.IO.File.Delete(imagePath);
+            }
+
             if (application != null)
             {
                 _context.Applications.Remove(application);

@@ -186,6 +186,7 @@ namespace Animal_Protection.Controllers
             var animal = await _context.Animals.FindAsync(id);
 
             string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;
+
             var imagePath = Path.Combine(upload, animal.Image);
 
             if (System.IO.File.Exists(imagePath))

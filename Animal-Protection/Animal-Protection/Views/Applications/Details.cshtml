@@ -59,6 +59,8 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <p>
-    <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)">
-        <img src="~/images/image.jpg"><a />
+    <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)"><img src="~/images/image.jpg"><a />
 <p />
+<p>
+         Номер телефона - @Html.DisplayFor(model=> model.Sender.TelephoneNumber)
+</p>

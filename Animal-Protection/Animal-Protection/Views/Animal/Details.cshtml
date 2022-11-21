@@ -26,7 +26,8 @@
             Uploaded Image
         </dt>
         <dd class="col-sm-10">
-            <img src="@("~/images/" + Model.Image)" asp-append-version = "true" width="250px" height="250px" />
+            <img src="@(Protection_Animal.Utility.WebConstants.ImagePath + @Model.Image)"
+            asp-append-version = "true" width="250px" height="250px" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Name)

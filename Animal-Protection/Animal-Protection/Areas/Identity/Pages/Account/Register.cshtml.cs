@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Controller;
+using Protection_Animal.Utility;
 
 namespace Animal_Protection.Areas.Identity.Pages.Account
 {

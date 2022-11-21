@@ -176,7 +176,6 @@ namespace Animal_Protection.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool ApplicationExists(int id)
         {
             return _context.Applications.Any(e => e.Id == id);

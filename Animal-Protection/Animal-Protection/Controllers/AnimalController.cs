@@ -104,17 +104,18 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Animal animal)
         {
-            var objectFromDb = _context.Animals.AsNoTracking()
-                .FirstOrDefault(u => u.Id == animal.Id);
+            var objectFromDb = _context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == animal.Id);
 
             if (id != animal.Id)
             {
                 return NotFound();
             }
-            if (ModelState.IsValid)
+
+            if (!ModelState.IsValid)
             {
                 try
                 {
+
                     var files = HttpContext.Request.Form.Files;
                     string webRootPath = _webHostEnvironment.WebRootPath;
 

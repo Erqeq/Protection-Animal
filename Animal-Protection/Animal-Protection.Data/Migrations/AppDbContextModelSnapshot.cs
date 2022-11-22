@@ -48,6 +48,15 @@ namespace Animal_Protection.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Animals");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Description = "тралял",
+                            Image = "5d9ec9d1-3706-4b08-98c3-c29690955391.jpg",
+                            Name = "Кошка"
+                        });
                 });
 
             modelBuilder.Entity("Protection_Animal.Model.Entities.Application", b =>
@@ -73,6 +82,7 @@ namespace Animal_Protection.Data.Migrations
                         .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Image")
+                        .IsRequired()
                         .HasMaxLength(1000)
                         .HasColumnType("nvarchar(1000)");
 

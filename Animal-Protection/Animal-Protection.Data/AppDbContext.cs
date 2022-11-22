@@ -34,6 +34,8 @@ namespace Animal_Protection.Data
                 new ApplicationCategory { Id = 4, Name = "Случка" },
                 new ApplicationCategory { Id = 5, Name = "Подарок" },
                 new ApplicationCategory { Id = 6, Name = "Другое" });
+
+
         }
     }
 }

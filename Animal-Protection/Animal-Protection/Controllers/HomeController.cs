@@ -2,6 +2,7 @@
 using Animal_Protection.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Protection_Animal.Model.Entities.ViewModels;
 using System.Diagnostics;
 
 namespace Animal_Protection.Controllers
@@ -20,8 +21,13 @@ namespace Animal_Protection.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender).Where(x => x.IsActive == true);
-            return View(await appDbContext.ToListAsync());
+            HomeVM homeVM = new HomeVM()
+            {
+                Applications = _context.Applications.Include(u => u.Category).Where(x => x.IsActive == true),
+                Categories = _context.Categories
+            };
+            //var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender).Where(x => x.IsActive == true);
+            return View(homeVM);
         }
 
         public IActionResult Privacy()

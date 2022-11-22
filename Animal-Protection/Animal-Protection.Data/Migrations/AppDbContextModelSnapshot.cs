@@ -115,6 +115,38 @@ namespace Animal_Protection.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Name = "Продажа"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Name = "Передержка"
+                        },
+                        new
+                        {
+                            Id = 3,
+                            Name = "Такси для животных"
+                        },
+                        new
+                        {
+                            Id = 4,
+                            Name = "Случка"
+                        },
+                        new
+                        {
+                            Id = 5,
+                            Name = "Подарок"
+                        },
+                        new
+                        {
+                            Id = 6,
+                            Name = "Другое"
+                        });
                 });
 
             modelBuilder.Entity("Protection_Animal.Model.Entities.Client", b =>

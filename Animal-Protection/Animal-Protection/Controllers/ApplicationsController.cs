@@ -57,7 +57,7 @@ namespace Animal_Protection.Controllers
         // GET: Applications/Create
         public IActionResult Create()
         {
-            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description");
+            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Name");
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name");
             ViewData["ReceiverId"] = new SelectList(_context.Clients, "Id", "Address");
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Name");
@@ -92,7 +92,7 @@ namespace Animal_Protection.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
+            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Name", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
             return View(application);
         }

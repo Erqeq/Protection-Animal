@@ -22,7 +22,7 @@ namespace Animal_Protection.Controllers
         // GET: Clients
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Clients.ToListAsync());
+            return View(await _context.Clients.ToListAsync());
         }
 
         // GET: Clients/Details/5
@@ -34,12 +34,13 @@ namespace Animal_Protection.Controllers
             }
 
             var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.Id == id);
+               .Include(m => m.Applications)
+               .FirstOrDefaultAsync(m => m.Id == id);
+
             if (client == null)
             {
                 return NotFound();
             }
-
             return View(client);
         }
 
@@ -126,14 +127,14 @@ namespace Animal_Protection.Controllers
             {
                 _context.Clients.Remove(client);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool ClientExists(string id)
         {
-          return _context.Clients.Any(e => e.Id == id);
+            return _context.Clients.Any(e => e.Id == id);
         }
     }
 }

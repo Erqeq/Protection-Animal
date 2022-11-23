@@ -64,7 +64,7 @@
 </div>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
-    <a asp-action="Index">Back to List</a>
+    <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 <p>
     <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)">

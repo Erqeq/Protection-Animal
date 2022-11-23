@@ -152,7 +152,7 @@ namespace Animal_Protection.Controllers
                     {
                         files[0].CopyTo(fileStream);
                     }
-
+                    application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     application.Image = fileName + extension;
                     _context.Update(application);
                     await _context.SaveChangesAsync();

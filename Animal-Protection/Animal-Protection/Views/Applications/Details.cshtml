@@ -11,6 +11,12 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Description)
         </dt>
         <dd class="col-sm-10">
@@ -38,20 +44,15 @@
             @Html.DisplayNameFor(model => model.Sender)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Sender.Address)
+            @Html.DisplayFor(model => model.Sender.Name)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Animal)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Animal.Description)
+            @Html.DisplayFor(model => model.Animal.Name)
         </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
+
         <dt class="col-sm-2">
             Uploaded Image
         </dt>
@@ -66,8 +67,9 @@
     <a asp-action="Index">Back to List</a>
 </div>
 <p>
-    <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)"><img src="~/images/image.jpg"><a />
+    <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)">
+        <img src="~/images/go.jpg" width="5%"><a />
 <p />
 <p>
-         Номер телефона - @Html.DisplayFor(model=> model.Sender.TelephoneNumber)
+         Номер телефона - <b>@Html.DisplayFor(model=> model.Sender.TelephoneNumber)</b>
 </p>

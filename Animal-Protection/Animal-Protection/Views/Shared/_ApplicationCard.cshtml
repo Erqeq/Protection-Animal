@@ -15,7 +15,7 @@
             </div
            
             <div class="col-12 pt-2" style="font-size:13px; text-align:justify">
-                <p> @Model.Description</p>
+                 <p class="text-secondary">@Html.Raw(Model.Description) </p>
             </div>
             <div class="col-12 p-1">
                 <a asp-action="Details" asp-route-id="@Model.Id" class="btn btn-dark form-control btn-sm p-2" style="height:40px">View Details</a>

@@ -110,7 +110,7 @@ namespace Animal_Protection.Controllers
             {
                 return NotFound();
             }
-            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
+            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Name", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);
@@ -123,7 +123,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
         {
-            var objectFromDb = _context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == application.Id);
+            var objectFromDb = _context.Applications.AsNoTracking().FirstOrDefault(u => u.Id == application.Id);
 
             if (id != application.Id)
             {
@@ -170,7 +170,7 @@ namespace Animal_Protection.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Description", application.AnimalId);
+            ViewData["AnimalId"] = new SelectList(_context.Animals, "Id", "Name", application.AnimalId);
             ViewData["CategoryId"] = new SelectList(_context.Categories, "Id", "Name", application.CategoryId);
             ViewData["SenderId"] = new SelectList(_context.Clients, "Id", "Address", application.SenderId);
             return View(application);

@@ -13,7 +13,7 @@ namespace Protection_Animal.Model.Entities
         public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }
         public ApplicationCategory Category { get; set; }
-        public string SenderId { get; set; }
+        public string SenderId { get; set; } 
         public Client Sender { get; set; }
         [DisplayName("Animal Type")]
         public int AnimalId { get; set; }   

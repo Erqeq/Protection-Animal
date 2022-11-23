@@ -5,7 +5,7 @@
         <button class="btn btn-dark filter-button" data-filter="all">All</button>
         @foreach (var obj in Model.Categories)
         {
-            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name">
+            <button class="btn btn-outline-secondary filter-button" data-filter="@obj.Name.Replace(' ','_')">
                 @obj.Name
             </button>
         }
@@ -19,72 +19,23 @@
     </div>
 </div>
 
-@*@{
-    ViewData["Title"] = "Home Page";
+@section Scripts{
+    <script>
+        $(document).ready(function () {
+
+            $(".filter-button").click(function () {
+
+                var value = $(this).attr('data-filter');
+                if (value == "all") {
+                    $('.filter').show('1000');
+                }
+                else {
+                    $(".filter").not('.' + value).hide('3000');
+                    $('.filter').filter('.' + value).show('3000');
+
+                }
+            });
+
+        });
+    </script>
 }
-
-<h1>Список активных заявок</h1>
-
-<h3>
-    <a class="nav d-xl-inline-block" asp-controller="Applications" asp-action="Create">Создать новую заявку</a>
-</h3>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DateCreate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.IsActive)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Category)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Sender)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Animal)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
-        {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.DateCreate.Year).@Html.DisplayFor(modelItem => item.DateCreate.Month).@Html.DisplayFor(modelItem => item.DateCreate.Day)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.IsActive)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Category.Name)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Sender.Address)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Animal.Description)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Name)
-                </td>
-                <td>
-                    <a asp-controller="Applications" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
-*@

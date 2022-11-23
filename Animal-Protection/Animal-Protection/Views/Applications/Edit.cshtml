@@ -45,8 +45,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="ImageFile" class="control-label"></label>
-                <input asp-for="ImageFile" class="form-control" />
-                <span asp-validation-for="ImageFile" class="text-danger"></span>
+                @*<input asp-for="ImageFile" class="form-control" />*@
+                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
+                
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

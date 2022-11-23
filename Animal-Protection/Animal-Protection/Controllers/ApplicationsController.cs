@@ -121,7 +121,7 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
+        public async Task<IActionResult> Edit(int id, [Bind("Description,CategoryId,AnimalId,SenderId,Id,Name,ImageFile")] Application application)
         {
             var objectFromDb = _context.Applications.AsNoTracking().FirstOrDefault(u => u.Id == application.Id);
 
@@ -136,24 +136,32 @@ namespace Animal_Protection.Controllers
                 {
                     var files = HttpContext.Request.Form.Files;
                     string webRootPath = _webHostEnvironment.WebRootPath;
-
-                    string upload = webRootPath + WebConstants.ImagePath;
-                    string fileName = Guid.NewGuid().ToString();
-                    string extension = Path.GetExtension(files[0].FileName);
-
-                    var imagePath = Path.Combine(upload, objectFromDb.Image);
-
-                    if (System.IO.File.Exists(imagePath))
+                    if(files.Count > 0)
                     {
-                        System.IO.File.Delete(imagePath);
-                    }
+                        string upload = webRootPath + WebConstants.ImagePath;
+                        string fileName = Guid.NewGuid().ToString();
+                        string extension = Path.GetExtension(files[0].FileName);
 
-                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
-                    {
-                        files[0].CopyTo(fileStream);
+                        var imagePath = Path.Combine(upload, objectFromDb.Image);
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+                        application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                        application.Image = fileName + extension;
                     }
-                    application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
-                    application.Image = fileName + extension;
+                    else
+                    {
+                        application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+                        application.Image = objectFromDb.Image;
+                    }
+                   
                     _context.Update(application);
                     await _context.SaveChangesAsync();
                 }

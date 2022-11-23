@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Utility;
+using System.Drawing;
 
 namespace Animal_Protection.Controllers
 {
@@ -118,24 +119,31 @@ namespace Animal_Protection.Controllers
 
                     var files = HttpContext.Request.Form.Files;
                     string webRootPath = _webHostEnvironment.WebRootPath;
-
-                    string upload = webRootPath + WebConstants.ImagePath;
-                    string fileName = Guid.NewGuid().ToString();
-                    string extension = Path.GetExtension(files[0].FileName);
-
-                    var imagePath = Path.Combine(upload, objectFromDb.Image);
-
-                    if (System.IO.File.Exists(imagePath))
+                    if(files.Count > 0)
                     {
-                        System.IO.File.Delete(imagePath);
-                    }
+                        string upload = webRootPath + WebConstants.ImagePath;
+                        string fileName = Guid.NewGuid().ToString();
+                        string extension = Path.GetExtension(files[0].FileName);
 
-                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                        var imagePath = Path.Combine(upload, objectFromDb.Image);
+
+                        if (System.IO.File.Exists(imagePath))
+                        {
+                            System.IO.File.Delete(imagePath);
+                        }
+
+                        using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
+                        {
+                            files[0].CopyTo(fileStream);
+                        }
+
+                        animal.Image = fileName + extension;
+                    }
+                    else
                     {
-                        files[0].CopyTo(fileStream);
+                        animal.Image = objectFromDb.Image;
                     }
-
-                    animal.Image = fileName + extension;
+                    
 
                     _context.Update(animal);
                     await _context.SaveChangesAsync();

@@ -13,29 +13,29 @@
         <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
+                <b><label asp-for="Name" class="control-label"></label></b>
                 <input asp-for="Name" class="form-control" />
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
+                <b><label asp-for="Description" class="control-label"></label></b>
                 <textarea asp-for="Description" class="form-control summernote"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
+                <b>Select Image</b>
                 <input asp-for="ImageFile" class="form-control" />
                 <span asp-validation-for="ImageFile" class="text-danger"></span>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class ="form-control" asp-items="ViewBag.CategoryId">
+                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
                     <option disabled selected>--Select Category--</option>
                 </select>
             </div>
+            <p></p>
             <div class="form-group">
-                <label asp-for="AnimalId" class="control-label"></label>
-                <select asp-for="AnimalId" class ="form-control" asp-items="ViewBag.AnimalId">
+                <select asp-for="AnimalId" class="form-control" asp-items="ViewBag.AnimalId">
                     <option disabled selected>--Select Animal--</option>
                 </select>
             </div>
@@ -51,7 +51,9 @@
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 
     <script>
         $(document).ready(function () {

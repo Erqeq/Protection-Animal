@@ -121,7 +121,7 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Description,CategoryId,AnimalId,SenderId,Id,Name,ImageFile")] Application application)
+        public async Task<IActionResult> Edit(int id, [Bind("Description,CategoryId,IsActive,AnimalId,SenderId,Id,Name,ImageFile")] Application application)
         {
             var objectFromDb = _context.Applications.AsNoTracking().FirstOrDefault(u => u.Id == application.Id);
 

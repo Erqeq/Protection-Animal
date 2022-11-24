@@ -28,12 +28,12 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(m => m.DateCreate.Year).@Html.DisplayFor(m => m.DateCreate.Month).@Html.DisplayFor(m => m.DateCreate.Day)
         </dd>
-        <dt class="col-sm-2">
+     @*   <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.IsActive)
-        </dd>
+        </dd>*@
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Category)
         </dt>
@@ -62,10 +62,23 @@
         </dd>
     </dl>
 </div>
+<form asp-action="DetailsChange">
+    <input type="hidden" asp-for="@Model.Id" />
+    <div class="form-group form-check">
+        <label class="form-check-label">
+            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
+        </label>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+    </div>
+</form>
 <div>
     <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
+
+
 <p>
     <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)">
         <img src="~/images/go.jpg" width="5%"><a />

@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using System.Data;
 using Microsoft.AspNetCore.Hosting;
 using Protection_Animal.Utility;
+using System.Runtime.CompilerServices;
 
 namespace Animal_Protection.Controllers
 {
@@ -52,6 +53,24 @@ namespace Animal_Protection.Controllers
             }
 
             return View(application);
+        }
+        //POST
+        public async Task<IActionResult> DetailsChange(int id)
+        {
+            var falsevalue = await _context.Applications.Where(application => application.Id == id).FirstOrDefaultAsync();
+            if (falsevalue.IsActive == false)
+            {
+                falsevalue.IsActive = true;
+            }
+            else
+            {
+                falsevalue.IsActive = false;
+            }
+
+
+            _context.Update(falsevalue);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Applications/Create
@@ -136,7 +155,7 @@ namespace Animal_Protection.Controllers
                 {
                     var files = HttpContext.Request.Form.Files;
                     string webRootPath = _webHostEnvironment.WebRootPath;
-                    if(files.Count > 0)
+                    if (files.Count > 0)
                     {
                         string upload = webRootPath + WebConstants.ImagePath;
                         string fileName = Guid.NewGuid().ToString();
@@ -161,7 +180,7 @@ namespace Animal_Protection.Controllers
                         application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                         application.Image = objectFromDb.Image;
                     }
-                   
+
                     _context.Update(application);
                     await _context.SaveChangesAsync();
                 }

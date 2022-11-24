@@ -54,12 +54,18 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
-
     <script>
         $(document).ready(function () {
             $('.summernote').summernote({
-                height: 200
+                height: 200,
+                callbacks: {
+                    onInit: function (c) {
+                        c.editable.html('');
+                    }
+                }  
             });
         });
     </script>
 }
+
+    

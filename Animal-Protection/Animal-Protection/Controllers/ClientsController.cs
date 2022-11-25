@@ -7,9 +7,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
+using Microsoft.AspNetCore.Authorization;
+using Animal_Protection.Areas.Identity.Data;
+using Protection_Animal.Utility;
 
 namespace Animal_Protection.Controllers
 {
+   
     public class ClientsController : Controller
     {
         private readonly AppDbContext _context;
@@ -20,6 +24,7 @@ namespace Animal_Protection.Controllers
         }
 
         // GET: Clients
+        [Authorize(Roles = WebConstants.Admin)]
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clients.ToListAsync());
@@ -131,10 +136,25 @@ namespace Animal_Protection.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
         private bool ClientExists(string id)
         {
             return _context.Clients.Any(e => e.Id == id);
+        }
+        public void AddUser(AnimalProtectionUser user)
+        {
+            var animalProtectionUser = MapUser(user);
+            _context.Clients.Add(animalProtectionUser);
+            _context.SaveChanges();
+        }
+        private Client MapUser(AnimalProtectionUser user)
+        {
+            return new Client()
+            {
+                Id = user.Id,
+                Name = user.FullName,
+                Email = user.Email,
+                TelephoneNumber = user.PhoneNumber
+            };
         }
     }
 }

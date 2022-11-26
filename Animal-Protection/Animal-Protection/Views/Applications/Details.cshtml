@@ -1,5 +1,12 @@
 ﻿@model Protection_Animal.Model.Entities.Application
 
+@using Animal_Protection.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@using Protection_Animal.Utility
+
+@inject SignInManager<AnimalProtectionUser> SignInManager
+@inject UserManager<AnimalProtectionUser> UserManager
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -28,7 +35,7 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(m => m.DateCreate.Year).@Html.DisplayFor(m => m.DateCreate.Month).@Html.DisplayFor(m => m.DateCreate.Day)
         </dd>
-     @*   <dt class="col-sm-2">
+            @*   <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.IsActive)
         </dt>
         <dd class="col-sm-10">
@@ -46,6 +53,7 @@
         <dd class="col-sm-10">
             <a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.SenderId">@Html.DisplayFor(model => model.Sender.Name)</a>
         </dd>
+        
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Animal)
         </dt>
@@ -74,7 +82,20 @@
     </div>
 </form>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @if (User.IsInRole(WebConstants.User))
+    {
+        AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
+        string email = applicationUser.Email;
+        if (SignInManager.IsSignedIn(User))
+        {
+            if (email == Model.Sender.Email)
+            {
+                <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            }
+        }
+        
+
+    }
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>
 

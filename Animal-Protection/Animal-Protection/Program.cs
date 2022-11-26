@@ -19,6 +19,15 @@ builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
+builder.Services.AddHttpContextAccessor();
+builder.Services.AddSession(option =>
+{
+    option.IdleTimeout = TimeSpan.FromHours(10);
+    option.Cookie.HttpOnly = true;
+    option.Cookie.IsEssential = true;
+});
+
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
@@ -41,6 +50,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthentication();
 app.UseAuthorization();

@@ -5,13 +5,12 @@
 @inject SignInManager<AnimalProtectionUser> SignInManager
 @inject UserManager<AnimalProtectionUser> UserManager
 
-
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))
 {
-        AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
+    AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
+    string fullname = applicationUser.FullName;
 
-        string fullname = applicationUser.FullName;
     <li class="nav-item">
             <a id="manage" class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @fullname!</a>
     </li>

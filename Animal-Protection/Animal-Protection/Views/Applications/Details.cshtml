@@ -85,16 +85,14 @@
     @if (User.IsInRole(WebConstants.User))
     {
         AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
-        string email = applicationUser.Email;
+        string userId = applicationUser.Id;
         if (SignInManager.IsSignedIn(User))
         {
-            if (email == Model.Sender.Email)
+            if (userId == Model.Sender.Id)
             {
                 <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
             }
         }
-        
-
     }
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

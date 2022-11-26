@@ -58,7 +58,7 @@
             @Html.DisplayNameFor(model => model.Animal)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Animal.Name)
+             <a asp-controller="Animal" asp-action="Details" asp-route-id="@Model.AnimalId">@Html.DisplayFor(model => model.Animal.Name)</a>
         </dd>
 
         <dt class="col-sm-2">

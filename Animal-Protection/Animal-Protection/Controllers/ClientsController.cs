@@ -17,10 +17,11 @@ namespace Animal_Protection.Controllers
     public class ClientsController : Controller
     {
         private readonly AppDbContext _context;
-
-        public ClientsController(AppDbContext context)
+        private readonly IdentityContext _identityContext;
+        public ClientsController(AppDbContext context, IdentityContext identityContext)
         {
             _context = context;
+            _identityContext = identityContext;
         }
 
         // GET: Clients
@@ -50,7 +51,7 @@ namespace Animal_Protection.Controllers
         }
 
         // GET: Clients/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Clients == null)
             {
@@ -121,7 +122,7 @@ namespace Animal_Protection.Controllers
         // POST: Clients/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Clients == null)
             {
@@ -131,8 +132,11 @@ namespace Animal_Protection.Controllers
             if (client != null)
             {
                 _context.Clients.Remove(client);
-            }
+                var clientFromIdentity = await _identityContext.Users.FindAsync(id);
+                _identityContext.Users.Remove(clientFromIdentity);
 
+            }
+            await _identityContext.SaveChangesAsync();
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

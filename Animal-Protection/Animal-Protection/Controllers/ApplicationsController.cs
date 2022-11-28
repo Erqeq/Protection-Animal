@@ -66,8 +66,6 @@ namespace Animal_Protection.Controllers
             {
                 falsevalue.IsActive = false;
             }
-
-
             _context.Update(falsevalue);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

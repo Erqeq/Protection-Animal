@@ -13,7 +13,6 @@
 
 <h1>Applications</h1>
 
-
 <p>
     <a asp-action="Create">Create New</a>
 </p>
@@ -56,7 +55,7 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.DateCreate.Year).@Html.DisplayFor(modelItem => item.DateCreate.Month).@Html.DisplayFor(modelItem => item.DateCreate.Day)
+                    @item.DateCreate.ToLongDateString()
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.IsActive)
@@ -85,7 +84,6 @@
                         <a asp-action="Details" asp-route-id="@item.Id">Details</a>
                         <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                     }
-
                 </td>
             </tr>
         }

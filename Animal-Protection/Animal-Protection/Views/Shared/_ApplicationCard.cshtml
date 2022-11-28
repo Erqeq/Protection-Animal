@@ -1,4 +1,5 @@
 ﻿@model Protection_Animal.Model.Entities.Application
+@using Protection_Animal.Utility
 
 
 <div class="col-lg-4 col-md-6 pb-4 filter @Model.Category.Name.Replace(' ','_')">
@@ -8,7 +9,7 @@
             <div class="col-7"><label class="float-left">@Model.Name</label></div>
 
         </div>
-        <img class="card-img-top img-fluid d-block mx-auto mb-3" src="@Protection_Animal.Utility.WebConstants.ImagePath@Model.Image" alt="Card image cap">
+        <img class="card-img-top img-fluid d-block mx-auto mb-3" src="@WebConstants.ImagePath@Model.Image" alt="Card image cap">
         <div class="card-body p-1 px-3 row">
             <div class="col-6">
                 <span class="badge p-2 border w-100" style="background-color:black">@Model.Category.Name</span>

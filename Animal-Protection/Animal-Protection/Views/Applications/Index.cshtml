@@ -70,7 +70,7 @@
                     @Html.DisplayFor(modelItem => item.Animal.Name)
                 </td>
                 <td>
-                    @if (User.IsInRole(WebConstants.User))
+                    @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))
                     {
                         AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
                         string userId = applicationUser.Id;

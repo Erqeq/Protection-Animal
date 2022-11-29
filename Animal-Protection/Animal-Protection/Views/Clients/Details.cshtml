@@ -1,5 +1,12 @@
 ﻿@model Protection_Animal.Model.Entities.Client
 
+@using Animal_Protection.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@using Protection_Animal.Utility
+
+@inject SignInManager<AnimalProtectionUser> SignInManager
+@inject UserManager<AnimalProtectionUser> UserManager
+
 @{
     ViewData["Title"] = "Details";
 }
@@ -67,6 +74,18 @@
     </table>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))
+    {
+        AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
+        string userId = applicationUser.Id;
+        if (SignInManager.IsSignedIn(User))
+        {
+            if (userId == Model.Id)
+            {
+                <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+            }
+        }
+    }
+   
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

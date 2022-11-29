@@ -1,4 +1,5 @@
-﻿@model Protection_Animal.Model.Entities.Animal
+﻿@using Protection_Animal.Utility
+@model Protection_Animal.Model.Entities.Animal
 
 @{
     ViewData["Title"] = "Details";
@@ -32,6 +33,11 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    @if (User.IsInRole(WebConstants.Admin))
+    {
+        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
+ 
+    }
+    
     <a asp-controller="Home" asp-action="Index">Back to List</a>
 </div>

@@ -1,5 +1,10 @@
 ﻿@model IEnumerable<Protection_Animal.Model.Entities.Animal>
+@using Animal_Protection.Areas.Identity.Data
+@using Microsoft.AspNetCore.Identity
+@using Protection_Animal.Utility
 
+@inject SignInManager<AnimalProtectionUser> SignInManager
+@inject UserManager<AnimalProtectionUser> UserManager
 @{
     ViewData["Title"] = "Index";
 }
@@ -7,7 +12,11 @@
 <h1>Animals</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    @if (User.IsInRole(WebConstants.Admin))
+    {
+        <a asp-action="Create">Create New</a>
+    }
+
 </p>
 <table class="table">
     <thead>
@@ -32,9 +41,19 @@
                     @Html.DisplayFor(modelItem => item.Description)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    @if (User.IsInRole(WebConstants.Admin))
+                    {
+
+
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a> 
+                          
+                        
+                    }
+
+                    
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> 
+                    
                 </td>
             </tr>
         }

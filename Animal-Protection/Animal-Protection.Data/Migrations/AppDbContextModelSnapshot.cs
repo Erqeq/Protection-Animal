@@ -141,8 +141,8 @@ namespace Animal_Protection.Data.Migrations
 
                     b.Property<string>("Description")
                         .IsRequired()
-                        .HasMaxLength(500)
-                        .HasColumnType("nvarchar(500)");
+                        .HasMaxLength(2022)
+                        .HasColumnType("nvarchar(2022)");
 
                     b.Property<string>("Image")
                         .IsRequired()
@@ -163,7 +163,8 @@ namespace Animal_Protection.Data.Migrations
 
                     b.Property<string>("ShortDesciption")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(40)
+                        .HasColumnType("nvarchar(40)");
 
                     b.HasKey("Id");
 

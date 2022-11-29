@@ -63,6 +63,17 @@
         $(document).ready(function () {
             $('.summernote').summernote({
                 height: 200,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'italic', 'underline', 'strikethrough']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ol', 'ul', 'paragraph', 'height']],
+                    ['table', ['table']],
+                    ['insert', ['link']],
+
+                ],
                 callbacks: {
                     onInit: function (c) {
                         c.editable.html('');

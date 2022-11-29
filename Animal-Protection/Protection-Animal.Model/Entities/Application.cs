@@ -7,8 +7,9 @@ namespace Protection_Animal.Model.Entities
 {
     public class Application : BaseEntity
     {
-        [MaxLength(500)]
+        [MaxLength(2022)]
         public string Description { get; set; }
+        [MaxLength(40)]
         public string ShortDesciption { get; set; }
         public DateTime DateCreate { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;

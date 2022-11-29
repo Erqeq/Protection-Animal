@@ -6,10 +6,12 @@
     <!-- Card-->
     <div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
         <div class="card-body px-3 pt-3 pb-1 row">
-            <div class="col-7"><label class="float-left">@Model.Name</label></div>
+            <div class="col-7"><label class="float-left text-size-label">@Model.Name</label></div>
 
         </div>
-        <img class="card-img-top img-fluid d-block mx-auto mb-3" src="@WebConstants.ImagePath@Model.Image" alt="Card image cap">
+        <div class="img-cont">
+            <img class="card-img-top img-fluid d-block mx-auto mb-3" src="@WebConstants.ImagePath@Model.Image" alt="Card image cap">
+        </div>
         <div class="card-body p-1 px-3 row">
             <div class="col-6">
                 <span class="badge p-2 border w-100" style="background-color:black">@Model.Category.Name</span>

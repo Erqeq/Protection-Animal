@@ -6,7 +6,7 @@
     <!-- Card-->
     <div class="card bg-white rounded shadow-sm" style="border:1px solid #222">
         <div class="card-body px-3 pt-3 pb-1 row">
-            <div class="col-7"><label class="float-left text-size-label">@Model.Name</label></div>
+            <div class="col-7"><label class="float-md-right text-size-label">@Model.Name</label></div>
 
         </div>
         <div class="img-cont">
@@ -20,7 +20,7 @@
                 <span class="badge p-2 border w-100" style="background-color:darkmagenta">@Model.Sender.TelephoneNumber</span>
             </div>
             <div class="col-12 pt-2" style="font-size:13px; text-align:justify">
-                 <p class="text-secondary">@Html.Raw(Model.Description) </p>
+                 <p class="text-secondary">@Model.ShortDesciption </p>
             </div>
 
             <div class="col-12 p-1"> 

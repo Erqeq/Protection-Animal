@@ -86,7 +86,7 @@ namespace Animal_Protection.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
+        public async Task<IActionResult> Create([Bind("ShortDesciption, Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
         {
             if (!ModelState.IsValid)
             {

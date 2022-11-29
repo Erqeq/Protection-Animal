@@ -9,6 +9,7 @@ namespace Protection_Animal.Model.Entities
     {
         [MaxLength(500)]
         public string Description { get; set; }
+        public string ShortDesciption { get; set; }
         public DateTime DateCreate { get; set; } = DateTime.Now;
         public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }

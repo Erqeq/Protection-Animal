@@ -201,55 +201,6 @@ namespace Animal_Protection.Controllers
             return View(application);
         }
 
-        // GET: Applications/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.Applications == null)
-            {
-                return NotFound();
-            }
-
-            var application = await _context.Applications
-                .Include(a => a.Animal)
-                .Include(a => a.Category)
-                .Include(a => a.Sender)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (application == null)
-            {
-                return NotFound();
-            }
-
-            return View(application);
-        }
-
-        // POST: Applications/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.Applications == null)
-            {
-                return Problem("Entity set 'AppDbContext.Applications'  is null.");
-            }
-            var application = await _context.Applications.FindAsync(id);
-
-            string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;
-
-            var imagePath = Path.Combine(upload, application.Image);
-
-            if (System.IO.File.Exists(imagePath))
-            {
-                System.IO.File.Delete(imagePath);
-            }
-
-            if (application != null)
-            {
-                _context.Applications.Remove(application);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
         private bool ApplicationExists(int id)
         {
             return _context.Applications.Any(e => e.Id == id);

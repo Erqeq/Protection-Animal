@@ -1,7 +1,5 @@
 ﻿@model Protection_Animal.Model.Entities.ViewModels.HomeVM
-<p>
-    <a asp-area="" asp-controller="Applications" asp-action="Create">Create New</a>
-</p>
+
 <div class="container">
     <div class="text-center">
         <button class="btn btn-dark filter-button" data-filter="all">All</button>
@@ -12,9 +10,12 @@
             </button>
         }
     </div>
+    <p>
+
+    </p>
     <br />
     <div class="row">
-        @foreach(var app in Model.Applications)
+        @foreach (var app in Model.Applications)
         {
             <partial name="_ApplicationCard" model="app" />
         }

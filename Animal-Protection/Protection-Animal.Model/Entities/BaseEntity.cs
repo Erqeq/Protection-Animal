@@ -2,9 +2,9 @@
 
 namespace Protection_Animal.Model.Entities
 {
-    public abstract class BaseEntity
+    public abstract class BaseEntity<T, TId>
     {
-        public int Id { get; set; }
+        public T Id { get; set; }
         [MaxLength(100)]
         [Required]
         public string Name { get; set; }

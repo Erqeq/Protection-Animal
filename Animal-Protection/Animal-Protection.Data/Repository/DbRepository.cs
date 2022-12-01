@@ -4,7 +4,7 @@ using Protection_Animal.Model.Entities;
 
 namespace StudentManager.Model.Repositories
 {
-    public class DbRepository<T> : IRepository<T> where T : BaseEntity
+    public class DbRepository<T, TId> : IRepository<T, TId> where T : BaseEntity<T, TId>
     {
         protected readonly AppDbContext Ctx;
 
@@ -25,9 +25,9 @@ namespace StudentManager.Model.Repositories
 
             return list;
         }
-        public T ReadById(int id)
+        public T ReadById(TId id)
         {
-            var entity = Ctx.Set<T>().FirstOrDefault(en => en.Id == id);
+            var entity = Ctx.Set<T>().FirstOrDefault(en => en.Id.Equals(id));
             return entity;
         }
         public T Update(T entity)
@@ -43,7 +43,7 @@ namespace StudentManager.Model.Repositories
 
             Ctx.SaveChanges();
         }
-        public void DeleteById(int id)
+        public void DeleteById(TId id)
         {
             var entity = ReadById(id);
             Ctx.Set<T>().Remove(entity);

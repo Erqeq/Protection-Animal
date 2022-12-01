@@ -1,4 +1,5 @@
-﻿using Protection_Animal.Infrastructure.Managers.Interfaces;
+﻿using ProjectAnimal.Model.Repository;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Model.Entities;
 
 namespace Protection_Animal.Infrastructure.Managers.Implemetations
@@ -7,7 +8,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
     {
         private readonly IRepository<Application, string> _repository;
 
-        public ApplicationsManager(IRepository<Student, int> repository)
+        public ApplicationsManagers(IRepository<Application, string> repository)
         {
             _repository = repository;
         }

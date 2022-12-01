@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Protection_Animal.Model.Entities
 {
-    public class Application : BaseEntity
+    public class Application : BaseEntity<Application, int>
     {
         [MaxLength(2022)]
         public string Description { get; set; }

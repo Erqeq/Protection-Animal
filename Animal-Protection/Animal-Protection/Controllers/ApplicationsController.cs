@@ -46,7 +46,7 @@ namespace Animal_Protection.Controllers
                 .Include(a => a.Animal)
                 .Include(a => a.Category)
                 .Include(a => a.Sender)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
             if (application == null)
             {
                 return NotFound();
@@ -57,7 +57,7 @@ namespace Animal_Protection.Controllers
         //POST
         public async Task<IActionResult> DetailsChange(int id)
         {
-            var falsevalue = await _context.Applications.Where(application => application.Id == id).FirstOrDefaultAsync();
+            var falsevalue = await _context.Applications.Where(application => application.Id.Equals(id)).FirstOrDefaultAsync();
             if (falsevalue.IsActive == false)
             {
                 falsevalue.IsActive = true;
@@ -142,7 +142,7 @@ namespace Animal_Protection.Controllers
         {
             var objectFromDb = _context.Applications.AsNoTracking().FirstOrDefault(u => u.Id == application.Id);
 
-            if (id != application.Id)
+            if (!application.Id.Equals(id))
             {
                 return NotFound();
             }
@@ -184,14 +184,7 @@ namespace Animal_Protection.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ApplicationExists(application.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                  
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -203,7 +196,7 @@ namespace Animal_Protection.Controllers
 
         private bool ApplicationExists(int id)
         {
-            return _context.Applications.Any(e => e.Id == id);
+            return _context.Applications.Any(e => e.Id.Equals(id));
         }
     }
 }

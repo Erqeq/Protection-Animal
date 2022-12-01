@@ -66,7 +66,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ApplicationCategory applicationCategory)
         {
-            if (id != applicationCategory.Id)
+            if (!applicationCategory.Id.Equals(id))
             {
                 return NotFound();
             }
@@ -80,14 +80,7 @@ namespace Animal_Protection.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ApplicationCategoryExists(applicationCategory.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -103,7 +96,7 @@ namespace Animal_Protection.Controllers
             }
 
             var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
             if (category == null)
             {
                 return NotFound();
@@ -133,7 +126,7 @@ namespace Animal_Protection.Controllers
 
         private bool ApplicationCategoryExists(int id)
         {
-          return _context.Categories.Any(e => e.Id == id);
+          return _context.Categories.Any(e => e.Id.Equals(id));
         }
     }
 }

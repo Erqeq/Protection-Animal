@@ -37,7 +37,7 @@ namespace Animal_Protection.Controllers
             }
 
             var animal = await _context.Animals
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
             if (animal == null)
             {
                 return NotFound();
@@ -107,7 +107,7 @@ namespace Animal_Protection.Controllers
         {
             var objectFromDb = _context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == animal.Id);
 
-            if (id != animal.Id)
+            if (!animal.Id.Equals(id))
             {
                 return NotFound();
             }
@@ -150,14 +150,7 @@ namespace Animal_Protection.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AnimalExists(animal.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
+                
                 }
                 return RedirectToAction(nameof(Index));
             }
@@ -173,7 +166,7 @@ namespace Animal_Protection.Controllers
             }
 
             var animal = await _context.Animals
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.Id.Equals(id));
             if (animal == null)
             {
                 return NotFound();
@@ -212,9 +205,5 @@ namespace Animal_Protection.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AnimalExists(int id)
-        {
-          return _context.Animals.Any(e => e.Id == id);
-        }
     }
 }

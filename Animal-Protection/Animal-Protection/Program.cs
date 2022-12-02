@@ -34,6 +34,17 @@ builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
+builder.Services.AddAuthentication().AddFacebook(options =>
+{
+    options.AppId = "1214617792823832";
+    options.AppSecret = "3d4935483c23d5c5ae5e0c089ed857b3";
+});
+
+builder.Services.AddAuthentication().AddGoogle(options =>
+{
+    options.ClientId = "570673526187-46pdarq9kp89af9j8bsvebjvm7sqeju3.apps.googleusercontent.com";
+    options.ClientSecret = "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";
+});
 
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 

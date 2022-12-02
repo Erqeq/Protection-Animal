@@ -18,6 +18,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using Protection_Animal.Utility;
+using Animal_Protection.Controllers;
 
 namespace Animal_Protection.Areas.Identity.Pages.Account
 {
@@ -30,13 +32,14 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
         private readonly IUserEmailStore<AnimalProtectionUser> _emailStore;
         private readonly IEmailSender _emailSender;
         private readonly ILogger<ExternalLoginModel> _logger;
+        private readonly ClientsController _clientsController;
 
         public ExternalLoginModel(
             SignInManager<AnimalProtectionUser> signInManager,
             UserManager<AnimalProtectionUser> userManager,
             IUserStore<AnimalProtectionUser> userStore,
             ILogger<ExternalLoginModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender, ClientsController clientsController)
         {
             _signInManager = signInManager;
             _userManager = userManager;
@@ -44,6 +47,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
             _emailStore = GetEmailStore();
             _logger = logger;
             _emailSender = emailSender;
+            _clientsController = clientsController;
         }
 
         /// <summary>
@@ -85,6 +89,11 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            public string FullName { get; set; }
+            [Required]
+            public string PhoneNumber { get; set; }
         }
         
         public IActionResult OnGet() => RedirectToPage("./Login");
@@ -132,7 +141,9 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),
+                        FullName = info.Principal.FindFirstValue(ClaimTypes.Email)
+                        
                     };
                 }
                 return Page();
@@ -152,7 +163,13 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
 
             if (ModelState.IsValid)
             {
-                var user = CreateUser();
+                var user = new AnimalProtectionUser
+                {
+                    UserName = Input.Email,
+                    Email = Input.Email,
+                    PhoneNumber = Input.PhoneNumber,
+                    FullName = Input.FullName
+                };
 
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
@@ -164,6 +181,8 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
                     if (result.Succeeded)
                     {
                         _logger.LogInformation("User created an account using {Name} provider.", info.LoginProvider);
+                        _clientsController.AddUser(user);
+                        await _userManager.AddToRoleAsync(user, WebConstants.User);
 
                         var userId = await _userManager.GetUserIdAsync(user);
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

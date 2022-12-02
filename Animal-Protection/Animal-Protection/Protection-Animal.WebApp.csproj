@@ -24,6 +24,7 @@
     <ProjectReference Include="..\Animal-Protection.Data\Protection-Animal.Data.csproj" />
     <ProjectReference Include="..\Protection-Animal.Model\Protection-Animal.Model.csproj" />
     <ProjectReference Include="..\Protection-Animal.Utility\Protection-Animal.Utility.csproj" />
+    <ProjectReference Include="..\Protection_Animal.Infrastructure\Protection_Animal.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

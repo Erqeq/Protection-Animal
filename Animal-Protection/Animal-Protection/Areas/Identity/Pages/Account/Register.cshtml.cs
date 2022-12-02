@@ -115,12 +115,7 @@ namespace Animal_Protection.Areas.Identity.Pages.Account
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            if(!await _roleManager.RoleExistsAsync(WebConstants.Admin))
-            {
-                await _roleManager.CreateAsync(new IdentityRole(WebConstants.Admin));
-                await _roleManager.CreateAsync(new IdentityRole(WebConstants.User));
-            }
-            
+ 
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }

@@ -5,6 +5,7 @@ using Animal_Protection.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Protection_Animal.Utility;
 using Animal_Protection.Controllers;
+using Animal_Protection.Initializer;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,15 +29,19 @@ builder.Services.AddSession(option =>
 });
 
 
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));
 
 
+builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -53,6 +58,7 @@ app.UseRouting();
 
 app.UseSession();
 
+SeedDatabase();
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -65,3 +71,12 @@ app.UseEndpoints(endpoints =>
 });
 
 app.Run();
+
+void SeedDatabase()
+{
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
+        dbInitializer.Initialize();
+    }
+}

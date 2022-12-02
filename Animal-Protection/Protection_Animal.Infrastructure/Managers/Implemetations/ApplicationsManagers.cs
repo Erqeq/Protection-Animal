@@ -6,9 +6,9 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 {
     internal class ApplicationsManagers : IApplicationManager
     {
-        private readonly IRepository<Application, string> _repository;
+        private readonly IRepository<Application, int> _repository;
 
-        public ApplicationsManagers(IRepository<Application, string> repository)
+        public ApplicationsManagers(IRepository<Application, int> repository)
         {
             _repository = repository;
         }

@@ -10,6 +10,7 @@ using Protection_Animal.Model.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Animal_Protection.Areas.Identity.Data;
 using Protection_Animal.Utility;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 
 namespace Animal_Protection.Controllers
 {
@@ -18,17 +19,20 @@ namespace Animal_Protection.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IdentityContext _identityContext;
-        public ClientsController(AppDbContext context, IdentityContext identityContext)
+        private readonly IClientManager _clientManager;
+        public ClientsController(AppDbContext context, IdentityContext identityContext, IClientManager clientManager)
         {
             _context = context;
             _identityContext = identityContext;
+            _clientManager = clientManager;
         }
 
         // GET: Clients
         [Authorize(Roles = WebConstants.Admin)]
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Clients.ToListAsync());
+            var getAllClients = _clientManager.GetAll();
+            return View(getAllClients);
         }
 
         // GET: Clients/Details/5
@@ -58,8 +62,8 @@ namespace Animal_Protection.Controllers
                 return NotFound();
             }
 
-            var client = await _context.Clients
-                .FirstOrDefaultAsync(m => m.Id == id);
+            var client = _clientManager.GetById(id);
+
             if (client == null)
             {
                 return NotFound();
@@ -77,25 +81,26 @@ namespace Animal_Protection.Controllers
             {
                 return Problem("Entity set 'AppDbContext.Clients'  is null.");
             }
-            var client = await _context.Clients.FindAsync(id);
+            
+            var client = _clientManager.GetById(id);
             if (client != null)
             {
-                _context.Clients.Remove(client);
+                
+                _clientManager.Delete(id);
+
                 var clientFromIdentity = await _identityContext.Users.FindAsync(id);
                 _identityContext.Users.Remove(clientFromIdentity);
 
             }
             await _identityContext.SaveChangesAsync();
-            await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
-        private bool ClientExists(string id)
-        {
-            return _context.Clients.Any(e => e.Id == id);
-        }
+       
         public void AddUser(AnimalProtectionUser user)
         {
             var animalProtectionUser = MapUser(user);
+            
             _context.Clients.Add(animalProtectionUser);
             _context.SaveChanges();
         }

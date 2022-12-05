@@ -3,11 +3,13 @@ using Microsoft.EntityFrameworkCore;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Model.Entities;
 
+
 namespace StudentManager.Model.Repositories
 {
     public class DbRepository<T, TId> : IRepository<T, TId> where T : BaseEntity<T, TId>
     {
         protected readonly AppDbContext _ctx;
+
 
         public DbRepository(AppDbContext ctx)
         {

@@ -10,7 +10,6 @@ namespace ProjectAnimal.Model.Repository
         public T ReadById(TId id);
         public T Delete(TId id);
         public T DeleteById(TId id);
-
         public bool IsExists(TId id);
 
     }

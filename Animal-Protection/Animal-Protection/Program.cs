@@ -48,7 +48,10 @@ builder.Services.AddTransient<IRepository<ApplicationCategory, int>, DbRepositor
 builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 
 builder.Services.AddTransient<IRepository<Animal, int>, DbRepository<Animal, int>>();
-builder.Services.AddTransient<IAnimalManager, AnimalManager>(); 
+builder.Services.AddTransient<IAnimalManager, AnimalManager>();
+
+builder.Services.AddTransient<IRepository<Client, string>, DbRepository<Client, string>>();
+builder.Services.AddTransient<IClientManager, ClientManager>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

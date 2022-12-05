@@ -10,13 +10,10 @@ namespace Protection_Animal.Infrastructure.Managers.Interfaces
     public interface IAnimalManager
     {
         public List<Animal> GetAll();
-
         public Animal Details(int id);
         public Animal Create(Animal animal);
-        public Animal ReadById(int id);
-        public Animal Update(Animal animal);
-
-        public Animal ObjectfromDb(int id);
+        public Animal GetById(int id);
+        public Animal Update(Animal animal, int id);
         public Animal Delete(int id);
     }
 }

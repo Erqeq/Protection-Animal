@@ -1,4 +1,5 @@
 ﻿using Animal_Protection.Data;
+using Microsoft.EntityFrameworkCore;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Model.Entities;
 
@@ -37,7 +38,7 @@ namespace StudentManager.Model.Repositories
                 return null;
             }
 
-            var entity = _ctx.Set<T>().FirstOrDefault(en => en.Id.Equals(id));
+            var entity = _ctx.Set<T>().AsNoTracking().FirstOrDefault(en => en.Id.Equals(id));
             return entity;
         }
         public T Update(T entity)

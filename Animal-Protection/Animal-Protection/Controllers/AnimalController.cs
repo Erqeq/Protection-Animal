@@ -15,16 +15,13 @@ namespace Animal_Protection.Controllers
 {
     public class AnimalController : Controller
     {
-        private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAnimalManager _animalManager;
-        
-        public AnimalController(AppDbContext context, IWebHostEnvironment webHostEnvironment, IAnimalManager animalManager)
+
+        public AnimalController(IWebHostEnvironment webHostEnvironment, IAnimalManager animalManager)
         {
-            _context = context;
             _webHostEnvironment = webHostEnvironment;
             _animalManager = animalManager;
-            
         }
 
         // GET: Animal
@@ -37,20 +34,11 @@ namespace Animal_Protection.Controllers
         // GET: Animal/Details/5
         public async Task<IActionResult> Details(int id)
         {
-            if (id == null || _context.Animals == null)
-            {
-                return NotFound();
-            }
-
-            //var animal = await _context.Animals
-            //    .FirstOrDefaultAsync(m => m.Id.Equals(id));
-
-            var animal = _animalManager.Details(id);
+            var animal = _animalManager.GetById(id);
             if (animal == null)
             {
                 return NotFound();
             }
-
             return View(animal);
         }
 
@@ -67,41 +55,29 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateOfBirth,Description,ImageFile,Id,Name")] Animal animal)
         {
-            if (!ModelState.IsValid)
+
+            var files = HttpContext.Request.Form.Files;
+            string webRootPath = _webHostEnvironment.WebRootPath;
+
+            string upload = webRootPath + WebConstants.ImagePath;
+            string fileName = Guid.NewGuid().ToString();
+            string extension = Path.GetExtension(files[0].FileName);
+
+            using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
             {
-                var files = HttpContext.Request.Form.Files;
-                string webRootPath = _webHostEnvironment.WebRootPath;
-
-                string upload = webRootPath + WebConstants.ImagePath;
-                string fileName = Guid.NewGuid().ToString();
-                string extension = Path.GetExtension(files[0].FileName);
-
-                using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
-                {
-                    files[0].CopyTo(fileStream);
-                }
-
-                animal.Image = fileName + extension;
-
-                //_context.Add(animal);
-                //await _context.SaveChangesAsync();
-
-                _animalManager.Create(animal);
-                return RedirectToAction(nameof(Index));
+                files[0].CopyTo(fileStream);
             }
-            return View(animal);
+
+            animal.Image = fileName + extension;
+
+            _animalManager.Create(animal);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Animal/Edit/5
-        public async Task<IActionResult> Edit(int/*?*/ id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Animals == null)
-            {
-                return NotFound();
-            }
-
-            
-            var animal = _animalManager.ReadById(id);
+            var animal = _animalManager.GetById(id);
             if (animal == null)
             {
                 return NotFound();
@@ -116,77 +92,59 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Animal animal)
         {
-            var objectFromDb = /*_context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == animal.Id);*/ _animalManager.ObjectfromDb(id);
+            var objectFromDb = _animalManager.GetById(id);
 
             if (!animal.Id.Equals(id))
             {
                 return NotFound();
             }
-
-            if (!ModelState.IsValid)
+            try
             {
-                try
+                var files = HttpContext.Request.Form.Files;
+                string webRootPath = _webHostEnvironment.WebRootPath;
+                if (files.Count > 0)
                 {
+                    string upload = webRootPath + WebConstants.ImagePath;
+                    string fileName = Guid.NewGuid().ToString();
+                    string extension = Path.GetExtension(files[0].FileName);
 
-                    var files = HttpContext.Request.Form.Files;
-                    string webRootPath = _webHostEnvironment.WebRootPath;
-                    if(files.Count > 0)
+                    var imagePath = Path.Combine(upload, objectFromDb.Image);
+
+                    if (System.IO.File.Exists(imagePath))
                     {
-                        string upload = webRootPath + WebConstants.ImagePath;
-                        string fileName = Guid.NewGuid().ToString();
-                        string extension = Path.GetExtension(files[0].FileName);
-
-                        var imagePath = Path.Combine(upload, objectFromDb.Image);
-
-                        if (System.IO.File.Exists(imagePath))
-                        {
-                            System.IO.File.Delete(imagePath);
-                        }
-
-                        using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
-                        {
-                            files[0].CopyTo(fileStream);
-                        }
-
-                        animal.Image = fileName + extension;
+                        System.IO.File.Delete(imagePath);
                     }
-                    else
+
+                    using (var fileStream = new FileStream(Path.Combine(upload, fileName + extension), FileMode.Create))
                     {
-                        animal.Image = objectFromDb.Image;
+                        files[0].CopyTo(fileStream);
                     }
-                    
-                    var updateanimal = _animalManager.Update(animal);
 
-                    //_context.Update(animal);
-                    //await _context.SaveChangesAsync();
+                    animal.Image = fileName + extension;
                 }
-                catch (DbUpdateConcurrencyException)
+                else
                 {
-                
+                    animal.Image = objectFromDb.Image;
                 }
-                return RedirectToAction(nameof(Index));
+                var updateanimal = _animalManager.Update(animal, id);
+
             }
-            return View(animal);
+            catch (DbUpdateConcurrencyException)
+            {
+                throw;
+            }
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Animal/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Animals == null)
-            {
-                return NotFound();
-            }
-
-            //var animal = await _context.Animals
-            //    .FirstOrDefaultAsync(m => m.Id.Equals(id));
-
-            var animal = _animalManager.ReadById(id);
+            var animal = _animalManager.GetById(id);
 
             if (animal == null)
             {
                 return NotFound();
             }
-
             return View(animal);
         }
 
@@ -195,12 +153,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Animals == null)
-            {
-                return Problem("Entity set 'AppDbContext.Animals'  is null.");
-            }
-
-            var animal = /*await _context.Animals.FindAsync(id);*/ _animalManager.ReadById(id);
+            var animal = _animalManager.Delete(id);
 
             string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;
 
@@ -211,12 +164,10 @@ namespace Animal_Protection.Controllers
                 System.IO.File.Delete(imagePath);
             }
 
-            if (animal != null)
+            if (animal == null)
             {
-                _animalManager.Delete(id);
+                return Problem("Entity is null");
             }
-            
-            
             return RedirectToAction(nameof(Index));
         }
 

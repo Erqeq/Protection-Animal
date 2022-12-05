@@ -47,6 +47,9 @@ builder.Services.AddTransient<IApplicationManager, ApplicationsManagers>();
 builder.Services.AddTransient<IRepository<ApplicationCategory, int>, DbRepository<ApplicationCategory, int>>();
 builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 
+builder.Services.AddTransient<IRepository<Animal, int>, DbRepository<Animal, int>>();
+builder.Services.AddTransient<IAnimalManager, AnimalManager>(); 
+
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer("ConnectionString"));

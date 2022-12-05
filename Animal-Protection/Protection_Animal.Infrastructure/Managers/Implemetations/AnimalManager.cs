@@ -7,6 +7,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Extensions.FileProviders;
+
+
 
 namespace Protection_Animal.Infrastructure.Managers.Implemetations
 {
@@ -29,15 +32,6 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
             return allAnimal.ToList();
 
         }
-        public Animal Details(int id)
-        {
-            var details = _repository.ReadById(id);
-
-            if (details == null)
-                return null;
-
-            return details;
-        }
         public Animal Create(Animal animal)
         {
 
@@ -48,45 +42,51 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
             return createAnimal;
         }
-        public Animal ReadById(int id)
+        public Animal Details(int id)
         {
-            var updateByIdAnimal = _repository.ReadById(id);
+            var details = _repository.ReadById(id);
 
-            if (updateByIdAnimal == null)
+            if (details == null)
                 return null;
 
-            return updateByIdAnimal;
+            return details;
         }
-        public Animal ObjectfromDb(int id)
+        public Animal Update(Animal animal, int id)
         {
-            var objFromDb = _repository.ReadById(id);
-
-            if (objFromDb == null)
-                return null;
-
-            return objFromDb;
+            try
+            {
+                _repository.Update(animal);
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!_repository.IsExists(animal.Id))
+                {
+                    return null;
+                }
+                else
+                {
+                    throw;
+                }
+            }
+            return animal;
         }
-
-        public Animal Update(Animal animal)
-        {
-           
-            var updateAnimal = _repository.Update(animal);
-
-            if (updateAnimal == null)
-                return null;
-
-            return updateAnimal;
-        }
-
         public Animal Delete(int id)
         {
             var deleteAnimal = _repository.DeleteById(id);
 
             if (deleteAnimal == null)
-                return null;
+            { return null; }
 
             return deleteAnimal;
 
+        }
+        public Animal GetById(int id)
+        {
+            return _repository.ReadById(id);
+        }
+        public bool IsExists(int id)
+        {
+            return _repository.IsExists(id);
         }
     }
 }

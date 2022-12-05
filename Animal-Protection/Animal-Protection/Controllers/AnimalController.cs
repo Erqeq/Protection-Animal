@@ -9,6 +9,7 @@ using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Utility;
 using System.Drawing;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 
 namespace Animal_Protection.Controllers
 {
@@ -16,31 +17,35 @@ namespace Animal_Protection.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        private readonly IAnimalManager _animalManager;
         
-        public AnimalController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
+        public AnimalController(AppDbContext context, IWebHostEnvironment webHostEnvironment, IAnimalManager animalManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _animalManager = animalManager;
             
         }
 
         // GET: Animal
         public async Task<IActionResult> Index()
         {
-            
-              return View(await _context.Animals.ToListAsync());
+            var allAnimals = _animalManager.GetAll();
+            return View(allAnimals);
         }
 
         // GET: Animal/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Animals == null)
             {
                 return NotFound();
             }
 
-            var animal = await _context.Animals
-                .FirstOrDefaultAsync(m => m.Id.Equals(id));
+            //var animal = await _context.Animals
+            //    .FirstOrDefaultAsync(m => m.Id.Equals(id));
+
+            var animal = _animalManager.Details(id);
             if (animal == null)
             {
                 return NotFound();
@@ -78,22 +83,25 @@ namespace Animal_Protection.Controllers
 
                 animal.Image = fileName + extension;
 
-                _context.Add(animal);
-                await _context.SaveChangesAsync();
+                //_context.Add(animal);
+                //await _context.SaveChangesAsync();
+
+                _animalManager.Create(animal);
                 return RedirectToAction(nameof(Index));
             }
             return View(animal);
         }
 
         // GET: Animal/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int/*?*/ id)
         {
             if (id == null || _context.Animals == null)
             {
                 return NotFound();
             }
 
-            var animal = await _context.Animals.FindAsync(id);
+            
+            var animal = _animalManager.ReadById(id);
             if (animal == null)
             {
                 return NotFound();
@@ -108,7 +116,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Animal animal)
         {
-            var objectFromDb = _context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == animal.Id);
+            var objectFromDb = /*_context.Animals.AsNoTracking().FirstOrDefault(u => u.Id == animal.Id);*/ _animalManager.ObjectfromDb(id);
 
             if (!animal.Id.Equals(id))
             {
@@ -147,9 +155,10 @@ namespace Animal_Protection.Controllers
                         animal.Image = objectFromDb.Image;
                     }
                     
+                    var updateanimal = _animalManager.Update(animal);
 
-                    _context.Update(animal);
-                    await _context.SaveChangesAsync();
+                    //_context.Update(animal);
+                    //await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -161,15 +170,18 @@ namespace Animal_Protection.Controllers
         }
 
         // GET: Animal/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
             if (id == null || _context.Animals == null)
             {
                 return NotFound();
             }
 
-            var animal = await _context.Animals
-                .FirstOrDefaultAsync(m => m.Id.Equals(id));
+            //var animal = await _context.Animals
+            //    .FirstOrDefaultAsync(m => m.Id.Equals(id));
+
+            var animal = _animalManager.ReadById(id);
+
             if (animal == null)
             {
                 return NotFound();
@@ -188,7 +200,7 @@ namespace Animal_Protection.Controllers
                 return Problem("Entity set 'AppDbContext.Animals'  is null.");
             }
 
-            var animal = await _context.Animals.FindAsync(id);
+            var animal = /*await _context.Animals.FindAsync(id);*/ _animalManager.ReadById(id);
 
             string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;
 
@@ -201,10 +213,10 @@ namespace Animal_Protection.Controllers
 
             if (animal != null)
             {
-                _context.Animals.Remove(animal);
+                _animalManager.Delete(id);
             }
             
-            await _context.SaveChangesAsync();
+            
             return RedirectToAction(nameof(Index));
         }
 

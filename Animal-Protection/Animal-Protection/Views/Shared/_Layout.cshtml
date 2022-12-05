@@ -30,12 +30,12 @@
                                 <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationCategories" asp-action="Index">Category</a>
                             </li>
                         }
-                        @if (User.IsInRole(WebConstants.Admin))
-                        {
+                        
+                        
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Applications" asp-action="Index">Application</a>
                             </li>
-                        }
+                        
                         @if (User.IsInRole(WebConstants.Admin))
                         {
                             <li class="nav-item">

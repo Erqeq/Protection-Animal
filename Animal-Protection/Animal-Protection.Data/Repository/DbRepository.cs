@@ -6,49 +6,71 @@ namespace StudentManager.Model.Repositories
 {
     public class DbRepository<T, TId> : IRepository<T, TId> where T : BaseEntity<T, TId>
     {
-        protected readonly AppDbContext Ctx;
+        protected readonly AppDbContext _ctx;
 
         public DbRepository(AppDbContext ctx)
         {
-            Ctx = ctx;
+            _ctx = ctx;
         }
         public T Create(T entity)
         {
-            var a = Ctx.Set<T>().Add(entity);
-            Ctx.SaveChanges();
+            var a = _ctx.Set<T>().Add(entity);
+            _ctx.SaveChanges();
 
             return a.Entity;
         }
-        public List<T> ReadAll()
+        public IQueryable<T> ReadAll()
         {
-            var list = Ctx.Set<T>().ToList();
+            if (_ctx.Set<T>() == null)
+            {
+                return null;
+            }
+
+            var list = _ctx.Set<T>();
 
             return list;
         }
-        public T ReadById(TId id)
+        public T ReadById(TId? id)
         {
-            var entity = Ctx.Set<T>().FirstOrDefault(en => en.Id.Equals(id));
+            if (_ctx.Set<T>() == null)
+            {
+                return null;
+            }
+
+            var entity = _ctx.Set<T>().FirstOrDefault(en => en.Id.Equals(id));
             return entity;
         }
         public T Update(T entity)
         {
-            var a = Ctx.Set<T>().Update(entity);
-            Ctx.SaveChanges();
+            var a = _ctx.Set<T>().Update(entity);
+            _ctx.SaveChanges();
 
             return a.Entity;
         }
-        public void Delete(T entity)
+        public T Delete(TId id)
         {
-            Ctx.Set<T>().Remove(entity);
+            var deleteEntity = _ctx.Set<T>().Find(id);
 
-            Ctx.SaveChanges();
+            _ctx.SaveChanges();
+
+            return deleteEntity;
+
+            
         }
-        public void DeleteById(TId id)
+        public T DeleteById(TId id)
         {
             var entity = ReadById(id);
-            Ctx.Set<T>().Remove(entity);
 
-            Ctx.SaveChanges();
+            _ctx.Set<T>().Remove((T)entity);
+
+            _ctx.SaveChanges();
+
+            return entity;
+        }
+
+        public bool IsExists(TId id)
+        {
+            return _ctx.Set<T>().Any(entity => entity.Id.Equals(id));
         }
     }
 }

@@ -101,6 +101,7 @@ namespace Animal_Protection.Controllers
         }
         private Client MapUser(AnimalProtectionUser user)
         {
+            
             return new Client()
             {
                 Id = user.Id,
@@ -108,6 +109,7 @@ namespace Animal_Protection.Controllers
                 Email = user.Email,
                 TelephoneNumber = user.PhoneNumber
             };
+            
         }
     }
 }

@@ -13,6 +13,7 @@ using System.Data;
 using Microsoft.AspNetCore.Hosting;
 using Protection_Animal.Utility;
 using System.Runtime.CompilerServices;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 
 namespace Animal_Protection.Controllers
 {
@@ -21,21 +22,30 @@ namespace Animal_Protection.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ApplicationsController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
+        private readonly IApplicationManager _applicationManager;
+        public ApplicationsController(AppDbContext context, IWebHostEnvironment webHostEnvironment, IApplicationManager applicationManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            _applicationManager = applicationManager;
         }
 
         // GET: Applications
         public async Task<IActionResult> Index()
         {
-            var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender);
-            return View(await appDbContext.ToListAsync());
+            //var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender);
+            var applications = _applicationManager.GetAll();
+
+            if (applications == null)
+            {
+                return NotFound();
+            }
+
+            return View(applications);
         }
 
-        // GET: Applications/Details/5
-        public async Task<IActionResult> Details(int? id)
+         //GET: Applications/Details/5
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.Applications == null)
             {
@@ -47,6 +57,9 @@ namespace Animal_Protection.Controllers
                 .Include(a => a.Category)
                 .Include(a => a.Sender)
                 .FirstOrDefaultAsync(m => m.Id.Equals(id));
+
+
+
             if (application == null)
             {
                 return NotFound();
@@ -105,6 +118,7 @@ namespace Animal_Protection.Controllers
                 application.Image = fileName + extension;
 
                 application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+ 
                 _context.Add(application);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

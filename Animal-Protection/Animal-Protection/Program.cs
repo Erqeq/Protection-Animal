@@ -6,11 +6,17 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Protection_Animal.Utility;
 using Animal_Protection.Controllers;
 using Animal_Protection.Initializer;
+using ProjectAnimal.Model.Repository;
+using StudentManager.Model.Repositories;
+using Protection_Animal.Model.Entities;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
+using Protection_Animal.Infrastructure.Managers.Implemetations;
+using Microsoft.Extensions.Logging;
+using StudentManager.WebApp.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 var connectionString = builder.Configuration.GetConnectionString("IdentityContextConnection") ?? throw new InvalidOperationException("Connection string 'IdentityContextConnection' not found.");
-builder.Services.AddTransient<ClientsController>();
 
 builder.Services.AddDbContext<IdentityContext>(options =>
     options.UseSqlServer(connectionString));
@@ -20,6 +26,11 @@ builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
+AddDbLogger(builder.Logging, options =>
+{
+    builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options").Bind(options);
+});
+
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(option =>
 {
@@ -28,7 +39,13 @@ builder.Services.AddSession(option =>
     option.Cookie.IsEssential = true;
 });
 
+builder.Services.AddTransient<ClientsController>();
 
+builder.Services.AddTransient<IRepository<Application, int>, DbRepository<Application, int>>();
+builder.Services.AddTransient<IApplicationManager, ApplicationsManagers>();
+
+builder.Services.AddTransient<IRepository<ApplicationCategory, int>, DbRepository<ApplicationCategory, int>>();
+builder.Services.AddTransient<ICategoryManager, CategoryManager>();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
@@ -90,4 +107,11 @@ void SeedDatabase()
         var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
         dbInitializer.Initialize();
     }
+}
+
+static ILoggingBuilder AddDbLogger(ILoggingBuilder builder, Action<DbLoggerOptions> configure)
+{
+    builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
+    builder.Services.Configure(configure);
+    return builder;
 }

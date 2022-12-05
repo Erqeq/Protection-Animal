@@ -16,15 +16,18 @@ namespace Animal_Protection.Controllers
     {
         private readonly AppDbContext _context;
         private readonly IWebHostEnvironment _webHostEnvironment;
+        
         public AnimalController(AppDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
+            
         }
 
         // GET: Animal
         public async Task<IActionResult> Index()
         {
+            
               return View(await _context.Animals.ToListAsync());
         }
 

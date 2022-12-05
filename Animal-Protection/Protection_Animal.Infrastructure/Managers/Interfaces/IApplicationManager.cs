@@ -6,5 +6,9 @@ namespace Protection_Animal.Infrastructure.Managers.Interfaces
     {
         public List<Application> GetAll();
 
+        //public List<Application> Details(int id);
+
+        
+
     }
 }

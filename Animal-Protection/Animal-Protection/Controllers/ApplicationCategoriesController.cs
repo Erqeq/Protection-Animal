@@ -3,22 +3,25 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 
 namespace Animal_Protection.Controllers
 {
     public class ApplicationCategoriesController : Controller
     {
-        private readonly AppDbContext _context;
 
-        public ApplicationCategoriesController(AppDbContext context)
+        private readonly ICategoryManager _categoryManager;
+
+        public ApplicationCategoriesController(ICategoryManager categoryManager)
         {
-            _context = context;
+            _categoryManager = categoryManager;
         }
 
         // GET: ApplicationCategories
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Categories.ToListAsync());
+            var allCategories = _categoryManager.GetAll();
+            return View(allCategories);
         }
 
         // GET: ApplicationCategories/Create
@@ -36,22 +39,18 @@ namespace Animal_Protection.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.Add(applicationCategory);
-                await _context.SaveChangesAsync();
+                var category = _categoryManager.Create(applicationCategory);
+
                 return RedirectToAction(nameof(Index));
             }
             return View(applicationCategory);
         }
 
         // GET: ApplicationCategories/Edit/5
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null || _context.Categories == null)
-            {
-                return NotFound();
-            }
+            var applicationCategory = _categoryManager.GetById(id);
 
-            var applicationCategory = await _context.Categories.FindAsync(id);
             if (applicationCategory == null)
             {
                 return NotFound();
@@ -66,43 +65,31 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ApplicationCategory applicationCategory)
         {
-            if (!applicationCategory.Id.Equals(id))
+            if (id != applicationCategory.Id)
             {
                 return NotFound();
             }
 
             if (ModelState.IsValid)
             {
-                try
-                {
-                    _context.Update(applicationCategory);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-
-                }
-                return RedirectToAction(nameof(Index));
+                var updateCategory = _categoryManager.Update(applicationCategory, id);
+                if (updateCategory != null)
+                { return RedirectToAction(nameof(Index)); }
             }
             return View(applicationCategory);
         }
 
         // GET: Animal/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int id)
         {
-            if (id == null || _context.Categories == null)
+
+            var deleteCategory = _categoryManager.GetById(id);
+            if (deleteCategory == null)
             {
                 return NotFound();
             }
 
-            var category = await _context.Categories
-                .FirstOrDefaultAsync(m => m.Id.Equals(id));
-            if (category == null)
-            {
-                return NotFound();
-            }
-
-            return View(category);
+            return View(deleteCategory);
         }
 
         // POST: Animal/Delete/5
@@ -110,23 +97,13 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Categories == null)
-            {
-                return Problem("Entity set 'AppDbContext.Animals'  is null.");
-            }
-            var category = await _context.Categories.FindAsync(id);
-            if (category != null)
-            {
-                _context.Categories.Remove(category);
-            }
+            var applicationCategory = _categoryManager.Delete(id);
 
-            await _context.SaveChangesAsync();
+            if (applicationCategory == null)
+            {
+                return Problem("Category is null.");
+            }
             return RedirectToAction(nameof(Index));
-        }
-
-        private bool ApplicationCategoryExists(int id)
-        {
-          return _context.Categories.Any(e => e.Id.Equals(id));
         }
     }
 }

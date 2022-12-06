@@ -3,14 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Model.Entities;
 
-
 namespace StudentManager.Model.Repositories
 {
     public class DbRepository<T, TId> : IRepository<T, TId> where T : BaseEntity<T, TId>
     {
         protected readonly AppDbContext _ctx;
-
-
         public DbRepository(AppDbContext ctx)
         {
             _ctx = ctx;
@@ -40,7 +37,9 @@ namespace StudentManager.Model.Repositories
                 return null;
             }
 
-            var entity = _ctx.Set<T>().AsNoTracking().FirstOrDefault(en => en.Id.Equals(id));
+            var entity = _ctx.Set<T>().
+                AsNoTracking()
+                .FirstOrDefault(en => en.Id.Equals(id));
             return entity;
         }
         public T Update(T entity)
@@ -52,13 +51,14 @@ namespace StudentManager.Model.Repositories
         }
         public T Delete(TId id)
         {
-            var deleteEntity = _ctx.Set<T>().Find(id);
+            var deleteEntity = _ctx.Set<T>()
+                .Find(id);
 
             _ctx.SaveChanges();
 
             return deleteEntity;
 
-            
+
         }
         public T DeleteById(TId id)
         {

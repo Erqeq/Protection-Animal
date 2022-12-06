@@ -6,8 +6,9 @@ namespace Protection_Animal.Infrastructure.Managers.Interfaces
     {
         public List<Application> GetAll();
 
-        //public List<Application> Details(int id);
-
+        public Application GetById(int id);
+        public Application Create(Application entity);
+        public Application Update(Application entity, int id);
         
 
     }

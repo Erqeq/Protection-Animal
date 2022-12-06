@@ -12,6 +12,5 @@ namespace Protection_Animal.Model.Entities.ViewModels
         public IEnumerable<Application> Applications { get; set; }
         public IEnumerable<Client> Clients { get; set; }    
 
-
     }
 }

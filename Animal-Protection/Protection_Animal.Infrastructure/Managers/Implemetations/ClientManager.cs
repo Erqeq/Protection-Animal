@@ -30,12 +30,8 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public Client GetById(string id)
         {
-            var getClientById = _repository.ReadById(id);
 
-            if (getClientById == null)
-                return null;
-
-            return getClientById;
+            return _repository.ReadById(id);
         }
 
         public Client Delete(string id)
@@ -47,7 +43,14 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
             return deleteClient;
         }
-     
+        public Client Create(Client client)
+        {
+            var createClient = _repository.Create(client);
 
+            if (createClient == null)
+                return null;
+
+            return createClient;
+        }
     }
 }

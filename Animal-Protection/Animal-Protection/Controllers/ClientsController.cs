@@ -68,7 +68,6 @@ namespace Animal_Protection.Controllers
             {
                 return NotFound();
             }
-
             return View(client);
         }
 
@@ -101,12 +100,10 @@ namespace Animal_Protection.Controllers
         {
             var animalProtectionUser = MapUser(user);
             
-            _context.Clients.Add(animalProtectionUser);
-            _context.SaveChanges();
+            _clientManager.Create(animalProtectionUser);
         }
         private Client MapUser(AnimalProtectionUser user)
         {
-            
             return new Client()
             {
                 Id = user.Id,

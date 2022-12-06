@@ -65,6 +65,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ApplicationCategory applicationCategory)
         {
+            
             if (id != applicationCategory.Id)
             {
                 return NotFound();

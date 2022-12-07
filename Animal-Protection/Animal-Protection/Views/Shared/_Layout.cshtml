@@ -8,12 +8,13 @@
 
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="stylesheet" href="~/css/auth.css" />
     <link rel="stylesheet" href="~/fontawesome/css/all.css" />
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css" rel="stylesheet">
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
             <div class="container-fluid">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
                     <img src="~/images/Logo.jpg" width="40%" />
@@ -27,23 +28,23 @@
                         @if (User.IsInRole(WebConstants.Admin))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="ApplicationCategories" asp-action="Index">Category</a>
+                                <a class="nav-link" asp-area="" asp-controller="ApplicationCategories" asp-action="Index">Category</a>
                             </li>
                         }
                         
                         
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Applications" asp-action="Index">Application</a>
+                                <a class="nav-link" asp-area="" asp-controller="Applications" asp-action="Index">Application</a>
                             </li>
                         
                         @if (User.IsInRole(WebConstants.Admin))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Clients" asp-action="Index">Client</a>
+                                <a class="nav-link" asp-area="" asp-controller="Clients" asp-action="Index">Client</a>
                             </li>
                         }
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Animal" asp-action="Index">Animals</a>
+                            <a class="nav-link" asp-area="" asp-controller="Animal" asp-action="Index">Animals</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -57,8 +58,8 @@
         </main>
     </div>
     <div>
-        <footer class="border-top footer text-muted">
-            <div class="container">
+        <footer class="border-top footer bg-dark">
+            <div class="container text-white-50">
                 &copy; 2022 - Animal_Protection - <a asp-area="" asp-controller="Home" asp-action="Privacy">Terms of use</a>
             </div>
         </footer>

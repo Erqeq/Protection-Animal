@@ -11,20 +11,21 @@ using Microsoft.AspNetCore.Authorization;
 using Animal_Protection.Areas.Identity.Data;
 using Protection_Animal.Utility;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
+using Protection_Animal.Infrastructure.Managers.Implemetations;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Identity;
 
 namespace Animal_Protection.Controllers
 {
-
     public class ClientsController : Controller
     {
-        private readonly AppDbContext _context;
-        private readonly IdentityContext _identityContext;
         private readonly IClientManager _clientManager;
-        public ClientsController(AppDbContext context, IdentityContext identityContext, IClientManager clientManager)
+        private readonly UserManager<AnimalProtectionUser> _userManager;
+        public ClientsController(AppDbContext context,
+            IClientManager clientManager, UserManager<AnimalProtectionUser> userManager)
         {
-            _context = context;
-            _identityContext = identityContext;
             _clientManager = clientManager;
+            _userManager = userManager;
         }
 
         // GET: Clients
@@ -38,30 +39,17 @@ namespace Animal_Protection.Controllers
         // GET: Clients/Details/5
         public async Task<IActionResult> Details(string? id)
         {
-            if (id == null || _context.Clients == null)
+            var client2 = _clientManager.GetById(id);
+            if (client2 == null)
             {
                 return NotFound();
             }
-
-            var client = await _context.Clients
-               .Include(m => m.Applications)
-               .FirstOrDefaultAsync(m => m.Id == id);
-
-            if (client == null)
-            {
-                return NotFound();
-            }
-            return View(client);
+            return View(client2);
         }
- 
+
         // GET: Clients/Delete/5
         public async Task<IActionResult> Delete(string? id)
         {
-            if (id == null || _context.Clients == null)
-            {
-                return NotFound();
-            }
-
             var client = _clientManager.GetById(id);
 
             if (client == null)
@@ -76,30 +64,24 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Clients == null)
-            {
-                return Problem("Entity set 'AppDbContext.Clients'  is null.");
-            }
-            
+
             var client = _clientManager.GetById(id);
             if (client != null)
             {
-                
                 _clientManager.Delete(id);
 
-                var clientFromIdentity = await _identityContext.Users.FindAsync(id);
-                _identityContext.Users.Remove(clientFromIdentity);
-
+                //var clientFromIdentity = await _identityContext.Users.FindAsync(id);
+                var user = await _userManager.FindByIdAsync(id);
+                await _userManager.DeleteAsync(user);
             }
-            await _identityContext.SaveChangesAsync();
-            
+
             return RedirectToAction(nameof(Index));
         }
-       
+
         public void AddUser(AnimalProtectionUser user)
         {
             var animalProtectionUser = MapUser(user);
-            
+
             _clientManager.Create(animalProtectionUser);
         }
         private Client MapUser(AnimalProtectionUser user)
@@ -111,7 +93,7 @@ namespace Animal_Protection.Controllers
                 Email = user.Email,
                 TelephoneNumber = user.PhoneNumber
             };
-            
+
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore.ChangeTracking;
+﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Model.Entities;
@@ -30,8 +31,10 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public Client GetById(string id)
         {
-
-            return _repository.ReadById(id);
+            var client = _repository.ReadAll()
+                .Include(c=>c.Applications)
+                .FirstOrDefault(m => m.Id.Equals(id));
+            return client;
         }
 
         public Client Delete(string id)

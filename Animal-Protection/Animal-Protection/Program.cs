@@ -13,6 +13,7 @@ using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Infrastructure.Managers.Implemetations;
 using Microsoft.Extensions.Logging;
 using StudentManager.WebApp.Models;
+using Microsoft.AspNet.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,6 +53,7 @@ builder.Services.AddTransient<IAnimalManager, AnimalManager>();
 
 builder.Services.AddTransient<IRepository<Client, string>, DbRepository<Client, string>>();
 builder.Services.AddTransient<IClientManager, ClientManager>();
+
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 

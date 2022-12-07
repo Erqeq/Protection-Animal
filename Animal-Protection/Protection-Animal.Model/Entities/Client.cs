@@ -14,6 +14,7 @@ namespace Protection_Animal.Model.Entities
         public string TelephoneNumber { get; set; }
         [MaxLength(100)]
         public string? Address { get; set; } = "Bishkek";
+
         public List<Application> Applications { get; set; }
     }
 }

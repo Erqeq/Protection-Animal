@@ -16,7 +16,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
         private readonly IRepository<Client, string> _repository;
         public ClientManager(IRepository<Client, string> repository)
         {
-            _repository= repository;
+            _repository = repository;
         }
 
         public List<Client> GetAll()
@@ -32,7 +32,8 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
         public Client GetById(string id)
         {
             var client = _repository.ReadAll()
-                .Include(c=>c.Applications)
+                .Include(c => c.Applications)
+                .AsNoTracking()
                 .FirstOrDefault(m => m.Id.Equals(id));
             return client;
         }

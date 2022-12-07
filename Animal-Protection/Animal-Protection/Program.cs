@@ -13,7 +13,6 @@ using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Infrastructure.Managers.Implemetations;
 using Microsoft.Extensions.Logging;
 using StudentManager.WebApp.Models;
-using Microsoft.AspNet.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,10 +26,10 @@ builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-AddDbLogger(builder.Logging, options =>
-{
-    builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options").Bind(options);
-});
+//AddDbLogger(builder.Logging, options =>
+//{
+//    builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options").Bind(options);
+//});
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(option =>
@@ -53,7 +52,6 @@ builder.Services.AddTransient<IAnimalManager, AnimalManager>();
 
 builder.Services.AddTransient<IRepository<Client, string>, DbRepository<Client, string>>();
 builder.Services.AddTransient<IClientManager, ClientManager>();
-
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 
@@ -117,9 +115,9 @@ void SeedDatabase()
     }
 }
 
-static ILoggingBuilder AddDbLogger(ILoggingBuilder builder, Action<DbLoggerOptions> configure)
-{
-    builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
-    builder.Services.Configure(configure);
-    return builder;
-}
+//static ILoggingBuilder AddDbLogger(ILoggingBuilder builder, Action<DbLoggerOptions> configure)
+//{
+//    builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
+//    builder.Services.Configure(configure);
+//    return builder;
+//}

@@ -4,7 +4,7 @@
     ViewData["Title"] = "Create";
 }
 
-<h1>Create</h1>
+@*<h1>Create</h1>
 
 <h4>Application</h4>
 <hr />
@@ -53,7 +53,89 @@
 
 <div>
     <a asp-action="Index">Back to List</a>
-</div>
+</div>*@
+
+
+</br>
+</br>
+<form method="post" asp-action="Create" enctype="multipart/form-data">
+    
+    <div class="border p-3">
+        
+        <div class="form-group row">
+            <h2 class="text-info pl-3">Create an animal</h2>
+        </div>
+        <div class="row">
+            <div class="col-8">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="Name"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    
+                    <div class="col-4">
+                        <label asp-for="ShortDesciption"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <input asp-for="ShortDesciption" class="form-control" />
+                        <span asp-validation-for="ShortDesciption" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-4">
+                        <label asp-for="Description" class="control-label"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <textarea asp-for="Description" class="form-control summernote"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-4">
+                        <label asp-for="Image"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <input asp-for="ImageFile" class="form-control" />
+                        <span asp-validation-for="ImageFile" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-4">
+                        <label asp-for="CategoryId"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId">
+                        <option disabled selected>--Select Category--</option>
+                        </select>
+                    </div>
+
+                    <div class="col-4">
+                        <label asp-for="AnimalId"></label>
+                    </div>
+                    <div class="col-8 mb-2">
+                        <select asp-for="AnimalId" class="form-control" asp-items="ViewBag.AnimalId">
+                            <option disabled selected>--Select Animal--</option>
+                        </select>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-8 offset-4 row">
+
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-100" value="create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> back</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</form>
 
 @section Scripts {
     @{

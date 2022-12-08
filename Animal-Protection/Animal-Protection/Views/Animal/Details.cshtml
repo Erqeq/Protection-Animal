@@ -5,42 +5,6 @@
     ViewData["Title"] = "Details";
 }
 
-@*<h1>Details</h1>
-
-<div>
-    <h4>Animal</h4>
-    <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.Raw(@Model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            Uploaded Image
-        </dt>
-        <dd class="col-sm-10">
-            <img src="@(Protection_Animal.Utility.WebConstants.ImagePath + @Model.Image)"
-            asp-append-version = "true" width="250px" height="250px" />
-        </dd>
-    </dl>
-</div>
-<div>
-    @if (User.IsInRole(WebConstants.Admin))
-    {
-        <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
- 
-    }
-    
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
-</div>*@
 
 <div class="">
     <form method="post">
@@ -78,13 +42,14 @@
                 <div class="card-footer bg-dark">
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1 ">
-
-                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">Edit</a>
+                            <a asp-action="Home" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
                         </div>
                         <div class="col-12 col-md-6 pb-1 ">
-                            <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
-                        </div>
-
+                            @if (User.IsInRole(WebConstants.Admin))
+                            {
+                                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">Edit</a>
+                            }
+                        </div
                     </div>
                 </div>
             </div>

@@ -1,63 +1,5 @@
 ﻿@model Protection_Animal.Model.Entities.Application
 
-@{
-    ViewData["Title"] = "Edit";
-}
-
-@*<h1>Edit</h1>
-
-<h4>Application</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ShortDesciption" class="control-label"></label>
-                <input asp-for="ShortDesciption" class="form-control" />
-                <span asp-validation-for="ShortDesciption" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control summernote" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-                </label>
-            </div>
-            <div class="form-group">
-                <label asp-for="CategoryId" class="control-label"></label>
-                <select asp-for="CategoryId" class="form-control" asp-items="ViewBag.CategoryId"></select>
-                <span asp-validation-for="CategoryId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AnimalId" class="control-label"></label>
-                <select asp-for="AnimalId" class="form-control" asp-items="ViewBag.AnimalId"></select>
-                <span asp-validation-for="AnimalId" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
-</div>*@
 
 
 </br>
@@ -109,11 +51,7 @@
                         <label asp-for="Image"></label>
                     </div>
                     <div class="col-8 mb-2">
-                        
-
-                        @*<label asp-for="ImageFile" class="control-label"></label>*@
                         <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-                        
                     </div>
 
                     <div class="col-4">
@@ -139,11 +77,13 @@
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
 
+                        
                         <div class="col">
                             <input type="submit" class="btn btn-info w-100" value="Edit" />
+                           
                         </div>
                         <div class="col">
-                            <a asp-action="index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i>Back</a>
+                            <a asp-controller="Home" asp-action="index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i>Back</a>
                         </div>
                     </div>
                 </div>

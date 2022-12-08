@@ -1,14 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Utility;
-using System.Drawing;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 
 namespace Animal_Protection.Controllers

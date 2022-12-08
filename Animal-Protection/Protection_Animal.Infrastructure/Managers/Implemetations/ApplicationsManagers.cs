@@ -1,5 +1,4 @@
-﻿using Animal_Protection.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Model.Entities;

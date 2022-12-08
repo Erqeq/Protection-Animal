@@ -1,18 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Animal_Protection.Areas.Identity.Data;
 using Protection_Animal.Utility;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
-using Protection_Animal.Infrastructure.Managers.Implemetations;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Identity;
 
 namespace Animal_Protection.Controllers

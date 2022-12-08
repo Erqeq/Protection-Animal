@@ -5,14 +5,14 @@ using Animal_Protection.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Protection_Animal.Utility;
 using Animal_Protection.Controllers;
-using Animal_Protection.Initializer;
+
 using ProjectAnimal.Model.Repository;
 using StudentManager.Model.Repositories;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Infrastructure.Managers.Implemetations;
 using Microsoft.Extensions.Logging;
-using StudentManager.WebApp.Models;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,10 +26,7 @@ builder.Services.AddIdentity<AnimalProtectionUser, IdentityRole>()
             .AddDefaultTokenProviders()
             .AddDefaultUI();
 
-//AddDbLogger(builder.Logging, options =>
-//{
-//    builder.Configuration.GetSection("Logging").GetSection("Database").GetSection("Options").Bind(options);
-//});
+
 
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(option =>
@@ -69,7 +66,7 @@ builder.Services.AddAuthentication().AddGoogle(options =>
     options.ClientSecret = "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";
 });
 
-builder.Services.AddScoped<IDbInitializer, DbInitializer>();
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -92,7 +89,7 @@ app.UseRouting();
 
 app.UseSession();
 
-SeedDatabase();
+
 app.UseAuthentication();
 app.UseAuthorization();
 
@@ -106,18 +103,5 @@ app.UseEndpoints(endpoints =>
 
 app.Run();
 
-void SeedDatabase()
-{
-    using (var scope = app.Services.CreateScope())
-    {
-        var dbInitializer = scope.ServiceProvider.GetRequiredService<IDbInitializer>();
-        dbInitializer.Initialize();
-    }
-}
 
-//static ILoggingBuilder AddDbLogger(ILoggingBuilder builder, Action<DbLoggerOptions> configure)
-//{
-//    builder.Services.AddSingleton<ILoggerProvider, DbLoggerProvider>();
-//    builder.Services.Configure(configure);
-//    return builder;
-//}
+

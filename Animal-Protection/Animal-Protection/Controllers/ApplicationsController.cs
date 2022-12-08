@@ -1,21 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Data;
-using Protection_Animal.Model.Entities;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-using System.Data;
-using Microsoft.AspNetCore.Hosting;
 using Protection_Animal.Utility;
-using System.Runtime.CompilerServices;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
-using Protection_Animal.Infrastructure.Managers.Implemetations;
-using static System.Net.Mime.MediaTypeNames;
 using Application = Protection_Animal.Model.Entities.Application;
 
 namespace Animal_Protection.Controllers
@@ -28,8 +18,11 @@ namespace Animal_Protection.Controllers
         private readonly IApplicationManager _applicationManager;
         private readonly ICategoryManager _categoryManager;
         private readonly IAnimalManager _animalManager;
-        public ApplicationsController(AppDbContext context, IWebHostEnvironment webHostEnvironment, IApplicationManager applicationManager
-            , ICategoryManager categoryManager, IAnimalManager animalManager)
+        public ApplicationsController(AppDbContext context, 
+            IWebHostEnvironment webHostEnvironment, 
+            IApplicationManager applicationManager,
+            ICategoryManager categoryManager, 
+            IAnimalManager animalManager)
         {
             _context = context;
             _webHostEnvironment = webHostEnvironment;
@@ -111,7 +104,7 @@ namespace Animal_Protection.Controllers
 
             _applicationManager.Create(application);
 
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("index", "Home");
         }
 
         // GET: Applications/Edit/5
@@ -174,13 +167,14 @@ namespace Animal_Protection.Controllers
                 }
                 _applicationManager.Update(application, id);
 
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("index", "Home");
+
             }
             catch (DbUpdateConcurrencyException)
             {
 
             }
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("index", "Home");
         }
 
     }

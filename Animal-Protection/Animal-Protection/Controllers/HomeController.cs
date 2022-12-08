@@ -26,7 +26,7 @@ namespace Animal_Protection.Controllers
                 Applications = _context.Applications.Include(u => u.Category).Include(u=>u.Sender).Where(x => x.IsActive == true),
                 Categories = _context.Categories
             };
-            //var appDbContext = _context.Applications.Include(a => a.Animal).Include(a => a.Category).Include(a => a.Sender).Where(x => x.IsActive == true);
+            
             return View(homeVM);
         }
 

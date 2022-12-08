@@ -128,12 +128,14 @@
 
                                     <div class="col-12">
                                         <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.Category.Name</span>
-                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.Sender.Name</span>
-                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.Animal.Name</span>
+                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush"> <a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.SenderId">@Html.DisplayFor(model => model.Sender.Name)</a></span>
+                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush"> <a asp-controller="Animal" asp-action="Details" asp-route-id="@Model.AnimalId">@Html.DisplayFor(model => model.Animal.Name)</a></span>
                                         <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.DateCreate.ToLongDateString()</span>
                                         <h3 class="text-success"></h3>
 
                                         <p class="text-secondary">@Html.Raw(Model.Description) </p>
+
+                                        
                                     </div>
 
                                 </div>
@@ -144,8 +146,18 @@
                 <div class="card-footer bg-dark">
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1 ">
-                            
-                            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">Edit</a>
+                            @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))
+                            {
+                                AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
+                                string userId = applicationUser.Id;
+                                if (SignInManager.IsSignedIn(User))
+                                {
+                                    if (userId == Model.Sender.Id)
+                                    {
+                                        <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">Edit</a>
+                                    }
+                                }
+                            }
                         </div>
                         <div class="col-12 col-md-6 pb-1 ">
                             <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>

@@ -25,6 +25,5 @@ namespace Protection_Animal.Model.Entities
 
         [NotMapped]
         public IFormFile ImageFile { get; set; }
-         
     }
 }

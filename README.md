@@ -47,9 +47,18 @@
 <ol>
     <li>
         Open the project
+    </li>
+    <li>
         Go to Tools - NuGet Package Manager - Package Manager Console and write next line:
+    </li>
+    <li>
         UpdateDataabse -context AppDbContext;
+    </li>
+    <li>
         UpdateDataabse -context IdentityContext;
-       
     </li>
 </ol>
+
+<h3>Enjoy your use!</h3>
+
+

@@ -127,10 +127,10 @@
                                 <div class="row pl-3">
 
                                     <div class="col-12">
-                                       <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.Category.Name</span>
+                                      <h5> <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.Category.Name</span>
                                         <span class="badge p-3 border text-dark" style="background-color:lavenderblush"> <a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.SenderId">@Html.DisplayFor(model => model.Sender.Name)</a></span>
                                         <span class="badge p-3 border text-dark" style="background-color:lavenderblush"> <a asp-controller="Animal" asp-action="Details" asp-route-id="@Model.AnimalId">@Html.DisplayFor(model => model.Animal.Name)</a></span>
-                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.DateCreate.ToLongDateString()</span>
+                                        <span class="badge p-3 border text-dark" style="background-color:lavenderblush">@Model.DateCreate.ToLongDateString()</span></h5>
                                         <h3 class="text-success"></h3>
 
                                         <p class="text-secondary">@Html.Raw(Model.Description) </p>

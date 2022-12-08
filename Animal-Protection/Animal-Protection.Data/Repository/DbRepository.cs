@@ -19,7 +19,7 @@ namespace StudentManager.Model.Repositories
 
             return a.Entity;
         }
-        public IQueryable<T> ReadAll()
+        public IQueryable<T> GetAll()
         {
             if (_ctx.Set<T>() == null)
             {
@@ -30,7 +30,7 @@ namespace StudentManager.Model.Repositories
 
             return list;
         }
-        public T ReadById(TId? id)
+        public T GetById(TId? id)
         {
             if (_ctx.Set<T>() == null)
             {
@@ -62,7 +62,7 @@ namespace StudentManager.Model.Repositories
         }
         public T DeleteById(TId id)
         {
-            var entity = ReadById(id);
+            var entity = GetById(id);
 
             _ctx.Set<T>().Remove((T)entity);
 

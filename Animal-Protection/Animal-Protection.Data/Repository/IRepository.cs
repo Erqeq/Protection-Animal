@@ -6,11 +6,10 @@ namespace ProjectAnimal.Model.Repository
     {
         public T Create(T entity);
         public T Update(T entity);
-        public IQueryable<T> ReadAll();
-        public T ReadById(TId id);
+        public IQueryable<T> GetAll();
+        public T GetById(TId id);
         public T Delete(TId id);
         public T DeleteById(TId id);
         public bool IsExists(TId id);
-
     }
 }

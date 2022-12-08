@@ -13,12 +13,11 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
         public ApplicationsManagers(IRepository<Application, int> repository)
         {
             _repository = repository;
-
         }
 
         public List<Application> GetAll()
         {
-            var allAppliations = _repository.ReadAll();
+            var allAppliations = _repository.GetAll();
 
             if (allAppliations == null)
                 return null;
@@ -32,7 +31,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public Application GetById(int id)
         {
-            var applicationDetails = _repository.ReadAll()
+            var applicationDetails = _repository.GetAll()
                 .Include(a => a.Animal)
                 .Include(a => a.Category)
                 .Include(a => a.Sender)
@@ -71,6 +70,5 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
             }
             return application;
         }
-
     }
 }

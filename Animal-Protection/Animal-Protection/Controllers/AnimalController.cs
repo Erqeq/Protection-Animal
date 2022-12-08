@@ -48,7 +48,6 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateOfBirth,Description,ImageFile,Id,Name")] Animal animal)
         {
-
             var files = HttpContext.Request.Form.Files;
             string webRootPath = _webHostEnvironment.WebRootPath;
 
@@ -163,6 +162,5 @@ namespace Animal_Protection.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
-
     }
 }

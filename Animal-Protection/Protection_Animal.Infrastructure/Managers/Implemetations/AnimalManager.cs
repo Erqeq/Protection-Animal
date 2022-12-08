@@ -16,7 +16,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public List<Animal> GetAll()
         {
-            var allAnimal = _repository.ReadAll();
+            var allAnimal = _repository.GetAll();
 
             if (allAnimal == null)
                 return null;
@@ -36,7 +36,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
         }
         public Animal Details(int id)
         {
-            var details = _repository.ReadById(id);
+            var details = _repository.GetById(id);
 
             if (details == null)
                 return null;
@@ -70,11 +70,10 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
             { return null; }
 
             return deleteAnimal;
-
         }
         public Animal GetById(int id)
         {
-            return _repository.ReadById(id);
+            return _repository.GetById(id);
         }
         public bool IsExists(int id)
         {

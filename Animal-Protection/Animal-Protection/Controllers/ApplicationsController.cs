@@ -172,7 +172,6 @@ namespace Animal_Protection.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-
             }
             return RedirectToAction("index", "Home");
         }

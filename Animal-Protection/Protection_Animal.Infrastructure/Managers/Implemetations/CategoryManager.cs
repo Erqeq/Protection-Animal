@@ -16,7 +16,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public List<ApplicationCategory> GetAll()
         {
-            var allCategories = _repository.ReadAll();
+            var allCategories = _repository.GetAll();
 
             if (allCategories == null)
                 return null;
@@ -26,13 +26,12 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public ApplicationCategory Create(ApplicationCategory applicationCategory)
         {
-            var createCategory =  _repository.Create(applicationCategory);
+            var createCategory = _repository.Create(applicationCategory);
 
             if (createCategory == null)
                 return null;
 
             return createCategory;
-
         }
         public ApplicationCategory Update(ApplicationCategory applicationCategory, int id)
         {
@@ -42,10 +41,9 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
             }
             catch (DbUpdateConcurrencyException)
             {
-                if(!_repository.IsExists(applicationCategory.Id))
+                if (!_repository.IsExists(applicationCategory.Id))
                 {
                     return null;
-
                 }
                 else
                 {
@@ -54,7 +52,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
             }
             return applicationCategory;
         }
-        public ApplicationCategory Delete(int id) 
+        public ApplicationCategory Delete(int id)
         {
             var deleteCategory = _repository.DeleteById(id);
 
@@ -66,8 +64,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
         }
         public ApplicationCategory GetById(int id)
         {
-            
-            return _repository.ReadById(id);
+            return _repository.GetById(id);
         }
 
         public bool IsExists(int id)

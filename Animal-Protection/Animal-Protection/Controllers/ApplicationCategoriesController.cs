@@ -1,7 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Animal_Protection.Data;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 
@@ -9,7 +6,6 @@ namespace Animal_Protection.Controllers
 {
     public class ApplicationCategoriesController : Controller
     {
-
         private readonly ICategoryManager _categoryManager;
 
         public ApplicationCategoriesController(ICategoryManager categoryManager)
@@ -65,7 +61,6 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Id,Name")] ApplicationCategory applicationCategory)
         {
-            
             if (id != applicationCategory.Id)
             {
                 return NotFound();
@@ -83,7 +78,6 @@ namespace Animal_Protection.Controllers
         // GET: Animal/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
-
             var deleteCategory = _categoryManager.GetById(id);
             if (deleteCategory == null)
             {

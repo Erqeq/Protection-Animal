@@ -5,13 +5,12 @@ using Animal_Protection.Data;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Protection_Animal.Utility;
 using Animal_Protection.Controllers;
-
 using ProjectAnimal.Model.Repository;
 using StudentManager.Model.Repositories;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Infrastructure.Managers.Implemetations;
-using Microsoft.Extensions.Logging;
+
 
 
 var builder = WebApplication.CreateBuilder(args);

@@ -1,13 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProjectAnimal.Model.Repository;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Model.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Protection_Animal.Infrastructure.Managers.Implemetations
 {
@@ -21,7 +15,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public List<Client> GetAll()
         {
-            var allClients = _repository.ReadAll();
+            var allClients = _repository.GetAll();
 
             if (allClients == null)
                 return null;
@@ -31,7 +25,7 @@ namespace Protection_Animal.Infrastructure.Managers.Implemetations
 
         public Client GetById(string id)
         {
-            var client = _repository.ReadAll()
+            var client = _repository.GetAll()
                 .Include(c => c.Applications)
                 .AsNoTracking()
                 .FirstOrDefault(m => m.Id.Equals(id));

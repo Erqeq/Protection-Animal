@@ -1,9 +1,5 @@
 <h1>"Protection-Animal"</h1>
 
-<h3>About</h3>
-
-<p>Training landing page about some team that demonstrates the developer's skills at the moment.</p>
-
 <h3>Project mission</h3>
 
 <p>The mission of the project is to protect animals from social disadvantages. Let's protect animals together!</p>

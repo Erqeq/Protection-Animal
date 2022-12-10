@@ -2,6 +2,7 @@
 using Animal_Protection.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using NLog;
 using Protection_Animal.Model.Entities.ViewModels;
 using System.Diagnostics;
 
@@ -11,6 +12,7 @@ namespace Animal_Protection.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly AppDbContext _context;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
 
         public HomeController(ILogger<HomeController> logger, AppDbContext context)
         {
@@ -21,6 +23,7 @@ namespace Animal_Protection.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
+            logger.Info("The user went to the home page");
             HomeVM homeVM = new HomeVM()
             {
                 Applications = _context.Applications.Include(u => u.Category).Include(u=>u.Sender).Where(x => x.IsActive == true),

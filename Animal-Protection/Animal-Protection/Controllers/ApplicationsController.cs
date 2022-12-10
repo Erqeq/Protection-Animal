@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authorization;
 using Protection_Animal.Utility;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Application = Protection_Animal.Model.Entities.Application;
+using NLog;
+using NLog.Fluent;
 
 namespace Animal_Protection.Controllers
 {
@@ -18,6 +20,7 @@ namespace Animal_Protection.Controllers
         private readonly IApplicationManager _applicationManager;
         private readonly ICategoryManager _categoryManager;
         private readonly IAnimalManager _animalManager;
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public ApplicationsController(AppDbContext context, 
             IWebHostEnvironment webHostEnvironment, 
             IApplicationManager applicationManager,
@@ -34,10 +37,12 @@ namespace Animal_Protection.Controllers
         // GET: Applications
         public async Task<IActionResult> Index()
         {
+            logger.Info("the user received all applications");
             var applications = _applicationManager.GetAll();
 
             if (applications == null)
             {
+                logger.Info("no applications");
                 return NotFound();
             }
 
@@ -47,9 +52,11 @@ namespace Animal_Protection.Controllers
         //GET: Applications/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            logger.Info("the user has received details of application");
             var application = _applicationManager.GetById(id);
             if (application == null)
             {
+                logger.Info("no details");
                 return NotFound();
             }
             return View(application);
@@ -60,10 +67,12 @@ namespace Animal_Protection.Controllers
             var falsevalue = _applicationManager.GetById(id);
             if (falsevalue.IsActive == false)
             {
+                logger.Info("the user update Is active to true");
                 falsevalue.IsActive = true;
             }
             else
             {
+                logger.Info("the user update Is active to false");
                 falsevalue.IsActive = false;
             }
             _applicationManager.Update(falsevalue, id);
@@ -86,6 +95,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("ShortDesciption, Description,CategoryId,AnimalId,Id,Name,ImageFile")] Application application)
         {
+            logger.Info("the user created an applications with photo");
             var files = HttpContext.Request.Form.Files;
             string webRootPath = _webHostEnvironment.WebRootPath;
 
@@ -110,7 +120,7 @@ namespace Animal_Protection.Controllers
         // GET: Applications/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
-
+            logger.Info($"edited an application");
             var application = _applicationManager.GetById(id);
             if (application == null)
             {
@@ -138,6 +148,7 @@ namespace Animal_Protection.Controllers
 
             try
             {
+                logger.Info("the user edited an application");
                 var files = HttpContext.Request.Form.Files;
                 string webRootPath = _webHostEnvironment.WebRootPath;
                 if (files.Count > 0)
@@ -162,6 +173,7 @@ namespace Animal_Protection.Controllers
                 }
                 else
                 {
+                    logger.Info("the user edited an application without changing an image");
                     application.SenderId = User.FindFirstValue(ClaimTypes.NameIdentifier);
                     application.Image = objectFromDb.Image;
                 }
@@ -170,9 +182,9 @@ namespace Animal_Protection.Controllers
                 return RedirectToAction("index", "Home");
 
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
-
+                logger.Error(ex);
             }
             return RedirectToAction("index", "Home");
         }

@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using Protection_Animal.Model.Entities;
 using Protection_Animal.Utility;
 using Protection_Animal.Infrastructure.Managers.Interfaces;
+using NLog;
 
 namespace Animal_Protection.Controllers
 {
@@ -10,7 +11,7 @@ namespace Animal_Protection.Controllers
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
         private readonly IAnimalManager _animalManager;
-
+        private static Logger logger = LogManager.GetCurrentClassLogger();
         public AnimalController(IWebHostEnvironment webHostEnvironment, IAnimalManager animalManager)
         {
             _webHostEnvironment = webHostEnvironment;
@@ -20,6 +21,7 @@ namespace Animal_Protection.Controllers
         // GET: Animal
         public async Task<IActionResult> Index()
         {
+            logger.Info("The user looked at all the animals");
             var allAnimals = _animalManager.GetAll();
             return View(allAnimals);
         }
@@ -27,6 +29,7 @@ namespace Animal_Protection.Controllers
         // GET: Animal/Details/5
         public async Task<IActionResult> Details(int id)
         {
+            logger.Info("The user brought out the details of all the animals");
             var animal = _animalManager.GetById(id);
             if (animal == null)
             {
@@ -48,6 +51,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("DateOfBirth,Description,ImageFile,Id,Name")] Animal animal)
         {
+            logger.Info("The user went to the tab to create animals");
             var files = HttpContext.Request.Form.Files;
             string webRootPath = _webHostEnvironment.WebRootPath;
 
@@ -69,6 +73,7 @@ namespace Animal_Protection.Controllers
         // GET: Animal/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
+            logger.Info("The user went to the tab to edit animals");
             var animal = _animalManager.GetById(id);
             if (animal == null)
             {
@@ -84,10 +89,12 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Animal animal)
         {
+            logger.Info("user wants to edit an animal");
             var objectFromDb = _animalManager.GetById(id);
 
             if (!animal.Id.Equals(id))
             {
+                logger.Info("there are no animals");
                 return NotFound();
             }
             try
@@ -121,8 +128,9 @@ namespace Animal_Protection.Controllers
                 var updateanimal = _animalManager.Update(animal, id);
 
             }
-            catch (DbUpdateConcurrencyException)
+            catch (DbUpdateConcurrencyException ex)
             {
+                logger.Error(ex);
                 throw;
             }
             return RedirectToAction(nameof(Index));
@@ -131,6 +139,7 @@ namespace Animal_Protection.Controllers
         // GET: Animal/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
+            logger.Info("the user was given a list of animals to delete");
             var animal = _animalManager.GetById(id);
 
             if (animal == null)
@@ -145,6 +154,7 @@ namespace Animal_Protection.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
+            logger.Info("the user wants to remove the animal");
             var animal = _animalManager.Delete(id);
 
             string upload = _webHostEnvironment.WebRootPath + WebConstants.ImagePath;

@@ -3,6 +3,7 @@ using Animal_Protection.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using NLog;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Model.Entities.ViewModels;
 using System.Diagnostics;
 
@@ -10,14 +11,15 @@ namespace Animal_Protection.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
-        private readonly AppDbContext _context;
+        private readonly IApplicationManager _applicationManager;
+        private readonly ICategoryManager _categoryManager;
         private static Logger logger = LogManager.GetCurrentClassLogger();
 
-        public HomeController(ILogger<HomeController> logger, AppDbContext context)
+        public HomeController(IApplicationManager applicationManager, ICategoryManager categoryManager)
         {
-            _logger = logger;
-            _context = context;
+            _applicationManager = applicationManager;
+            _categoryManager = categoryManager;
+            
         }
 
         // GET: Applications
@@ -26,8 +28,8 @@ namespace Animal_Protection.Controllers
             logger.Info("The user went to the home page");
             HomeVM homeVM = new HomeVM()
             {
-                Applications = _context.Applications.Include(u => u.Category).Include(u=>u.Sender).Where(x => x.IsActive == true),
-                Categories = _context.Categories
+                Applications = _applicationManager.GetAll().Where(x => x.IsActive == true),
+                Categories = _categoryManager.GetAll()
             };
             
             return View(homeVM);

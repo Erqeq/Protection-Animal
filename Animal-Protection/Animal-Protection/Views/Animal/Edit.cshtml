@@ -1,51 +1,5 @@
 ﻿@model Protection_Animal.Model.Entities.Animal
 
-@*@{
-    ViewData["Title"] = "Edit";
-}
-
-<h1>Edit</h1>
-
-<h4>Animal</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ImageFile" class="control-label"></label>
-                <input type="file" name="files" id="uploadBox" multiple class="form-control" />
-                
-            </div>
-             <dt class="col-sm-2">
-                Uploaded Image
-            </dt>
-             <dd class="col-sm-10">
-                 <img src="@("~/images/" + Model.Image)" asp-append-version="true" width="250px" height="250px" />
-             </dd>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
-    </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>*@
-
-
 </br>
 </br>
 <form method="post">
@@ -88,7 +42,10 @@
                             <input type="submit" class="btn btn-info w-100" value="Edit" />
                         </div>
                         <div class="col">
-                            <a asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> Back</a>
+                            <a asp-action="Index" class="btn btn-success w-100">
+                                <i class="fas fa-sign-out-alt"></i> &nbsp; Back
+                                
+                            </a>
                         </div>
                     </div>
                 </div>

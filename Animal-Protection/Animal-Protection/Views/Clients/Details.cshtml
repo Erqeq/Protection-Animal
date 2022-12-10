@@ -7,88 +7,6 @@
 @inject SignInManager<AnimalProtectionUser> SignInManager
 @inject UserManager<AnimalProtectionUser> UserManager
 
-@{
-    ViewData["Title"] = "Details";
-}
-
-@*<h1>Details</h1>
-
-<div>
-    <h4>Client</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.TelephoneNumber)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TelephoneNumber)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-    </dl>
-    <table class="table">
-        <tbody>
-            @foreach (var item in Model.Applications)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Description)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DateCreate.Year).@Html.DisplayFor(modelItem => item.DateCreate.Month).@Html.DisplayFor(modelItem => item.DateCreate.Day)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.IsActive)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Category.Name)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Animal.Name)
-                    </td>
-                    <td>
-                        <a asp-area="" asp-controller="Applications" asp-action="Details" asp-route-id="@item.Id">Details</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-<div>
-    @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))
-    {
-        AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
-        string userId = applicationUser.Id;
-        if (SignInManager.IsSignedIn(User))
-        {
-            if (userId == Model.Id)
-            {
-                <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-            }
-        }
-    }
-   
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
-</div>*@
 
 
 </br>
@@ -161,7 +79,7 @@
                 <div class="form-group row">
                     <div class="col-8 offset-4 row">
                         <div class="col">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i>Back to Home </a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-success w-100"><i class="fas fa-sign-out-alt"></i> &nbsp; Back to Home </a>
                         </div>
                     </div>
                 </div>

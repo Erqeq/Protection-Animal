@@ -42,12 +42,16 @@
                 <div class="card-footer bg-dark">
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1 ">
-                            <a asp-action="Home" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
+                            <a asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">
+                                <i class="fas fa-sign-out-alt"></i> &nbsp; Back
+                            </a>
                         </div>
                         <div class="col-12 col-md-6 pb-1 ">
                             @if (User.IsInRole(WebConstants.Admin))
                             {
-                                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">Edit</a>
+                                <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-info btn-square form-control btn-lg" style="height:50px;">
+                                    Edit
+                                </a>
                             }
                         </div
                     </div>

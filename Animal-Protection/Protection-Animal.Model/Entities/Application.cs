@@ -9,12 +9,20 @@ namespace Protection_Animal.Model.Entities
     {
         [MaxLength(2022)]
         public string Description { get; set; }
+
+        [DisplayName("Short desciption")]
         [MaxLength(40)]
         public string ShortDesciption { get; set; }
+
+        [DisplayName("Сreation date")]
         public DateTime DateCreate { get; set; } = DateTime.Now;
+
+        [DisplayName("Is active")]
         public bool IsActive { get; set; } = true;
         public int CategoryId { get; set; }
         public ApplicationCategory Category { get; set; }
+
+        [DisplayName("Sender")]
         public string SenderId { get; set; } 
         public Client Sender { get; set; }
         [DisplayName("Animal Type")]

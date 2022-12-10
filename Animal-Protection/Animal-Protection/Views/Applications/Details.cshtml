@@ -11,100 +11,6 @@
     ViewData["Title"] = "Details";
 }
 
-@*<h1>Details</h1>
-
-<div>
-    <h4>Application</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.ShortDesciption)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model=>model.ShortDesciption)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.Raw(@Model.Description)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DateCreate)
-        </dt>
-        <dd class="col-sm-10">
-            @Model.DateCreate.ToLongDateString()
-       </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Category)
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Category.Name)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Sender)
-        </dt>
-        <dd class="col-sm-10">
-            <a asp-controller="Clients" asp-action="Details" asp-route-id="@Model.SenderId">@Html.DisplayFor(model => model.Sender.Name)</a>
-        </dd>
-        
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Animal)
-        </dt>
-        <dd class="col-sm-10">
-             <a asp-controller="Animal" asp-action="Details" asp-route-id="@Model.AnimalId">@Html.DisplayFor(model => model.Animal.Name)</a>
-        </dd>
-
-        <dt class="col-sm-2">
-            Uploaded Image
-        </dt>
-        <dd class="col-sm-10">
-            <img src="@(WebConstants.ImagePath + @Model.Image)"
-                 asp-append-version="true" width="250px" height="250px" />
-        </dd>
-    </dl>
-</div>
-<form asp-action="DetailsChange">
-    <input type="hidden" asp-for="@Model.Id" />
-    <div class="form-group form-check">
-        <label class="form-check-label">
-            <input class="form-check-input" asp-for="IsActive" /> @Html.DisplayNameFor(model => model.IsActive)
-        </label>
-        <div class="form-group">
-            <input type="submit" value="Save" class="btn btn-primary" />
-        </div>
-    </div>
-</form>
-<div>
-    @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))
-    {
-        AnimalProtectionUser applicationUser = (AnimalProtectionUser)await UserManager.GetUserAsync(User);
-        string userId = applicationUser.Id;
-        if (SignInManager.IsSignedIn(User))
-        {
-            if (userId == Model.Sender.Id)
-            {
-                <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a>
-            }
-        }
-    }
-    <a asp-controller="Home" asp-action="Index">Back to List</a>
-</div>
-
-
-<p>
-    <a href="mailto:@Html.DisplayFor(model=>model.Sender.Email)?subject=@Html.DisplayFor(model => model.Category.Name)">
-        <img src="~/images/go.jpg" width="5%"><a />
-<p />
-<p>
-         Номер телефона - <b>@Html.DisplayFor(model=> model.Sender.TelephoneNumber)</b>
-</p>*@
 
 <div class="">
     <form method="post">
@@ -146,7 +52,9 @@
                 <div class="card-footer bg-dark">
                     <div class="row">
                         <div class="col-12 col-md-6 pb-1 ">
-                            <a asp-controller="Home" asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">Back to List</a>
+                            <a asp-controller="Home" asp-action="Index" class="btn btn-success btn-square form-control btn-lg" style="height:50px;">
+                                <i class="fas fa-sign-out-alt"></i> &nbsp; Back
+                            </a>
                         </div>
                         <div class="col-12 col-md-6 pb-1 ">
                             @if (User.IsInRole(WebConstants.User) || User.IsInRole(WebConstants.Admin))

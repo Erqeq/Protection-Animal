@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection-Animal.Model", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection-Animal.Utility", "Protection-Animal.Utility\Protection-Animal.Utility.csproj", "{8898F46D-28E1-4129-8B20-1FA585A3BECA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Protection_Animal.Infrastructure", "Protection_Animal.Infrastructure\Protection_Animal.Infrastructure.csproj", "{95131CD3-7CD9-4337-8C93-60E360806834}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Protection_Animal.Infrastructure", "Protection_Animal.Infrastructure\Protection_Animal.Infrastructure.csproj", "{95131CD3-7CD9-4337-8C93-60E360806834}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

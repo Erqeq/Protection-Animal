@@ -1,15 +1,15 @@
-using Microsoft.AspNetCore.Identity;
-using Microsoft.EntityFrameworkCore;
 using Animal_Protection.Areas.Identity.Data;
-using Animal_Protection.Data;
-using Microsoft.AspNetCore.Identity.UI.Services;
-using Protection_Animal.Utility;
 using Animal_Protection.Controllers;
+using Animal_Protection.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
+using Microsoft.EntityFrameworkCore;
 using ProjectAnimal.Model.Repository;
-using StudentManager.Model.Repositories;
-using Protection_Animal.Model.Entities;
-using Protection_Animal.Infrastructure.Managers.Interfaces;
 using Protection_Animal.Infrastructure.Managers.Implemetations;
+using Protection_Animal.Infrastructure.Managers.Interfaces;
+using Protection_Animal.Model.Entities;
+using Protection_Animal.Utility;
+using StudentManager.Model.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -63,13 +63,10 @@ builder.Services.AddAuthentication().AddGoogle(options =>
     options.ClientSecret = "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 ";
 });
 
-
-
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
 var app = builder.Build();
-
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

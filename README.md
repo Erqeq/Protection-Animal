@@ -48,10 +48,10 @@
         Go to Tools - NuGet Package Manager - Package Manager Console and write next line:
     </li>
     <li>
-        UpdateDataabse -context AppDbContext;
+        UpdateDatabse -context AppDbContext;
     </li>
     <li>
-        UpdateDataabse -context IdentityContext;
+        UpdateDatabse -context IdentityContext;
     </li>
 </ol>
 
